@@ -50,7 +50,6 @@ public class Main {
             for (Die die : dice)
                 die.roll();
 
-            total2 = 0;
             for (Die die : dice) {
                 total2 += die.getFaceValue();
             }
@@ -61,6 +60,7 @@ public class Main {
 
             if (total1 == total2) {
                 System.out.println("same number you lose");
+                isWinner = false;
             } else {
                 boolean isLarger = total2 > total1;
                 switch (guess) {
@@ -78,6 +78,7 @@ public class Main {
                 System.out.println("Nice one! Let's play again!");
                 wins++;
                 total1 = total2;
+                total2 = 0;
             }
             else
                 System.out.println("Not so nice... better luck next time!");
