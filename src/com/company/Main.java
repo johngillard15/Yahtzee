@@ -26,21 +26,22 @@ public class Main {
 
         }
 
+        // roll all dice in list
+        for (Die die : dice)
+            die.roll();
+
+        int total1 = 0, total2 = 0;
+        for (Die die : dice)
+            total1 += die.getFaceValue();
+
+        // Print initial roll and ask user for guess
+        dice.get(0).showDice(dice);
+        System.out.println("Total = " + total1);
+
         // replay until player loses; also tracks total wins
         int wins = 0;
         boolean isWinner = true;
         do{
-            // roll all dice in list
-            for (Die die : dice)
-                die.roll();
-
-            int total1 = 0;
-            for (Die die : dice)
-                total1 += die.getFaceValue();
-
-            // Print initial roll and ask user for guess
-            dice.get(0).showDice(dice);
-            System.out.println("Total = " + total1);
             System.out.println("Will the next roll be (h)igher or (l)ower?");
             System.out.print("Your guess: ");
             String guess = scanner.next();
@@ -49,7 +50,7 @@ public class Main {
             for (Die die : dice)
                 die.roll();
 
-            int total2 = 0;
+            total2 = 0;
             for (Die die : dice) {
                 total2 += die.getFaceValue();
             }
@@ -76,6 +77,7 @@ public class Main {
             if(isWinner) {
                 System.out.println("Nice one! Let's play again!");
                 wins++;
+                total1 = total2;
             }
             else
                 System.out.println("Not so nice... better luck next time!");
