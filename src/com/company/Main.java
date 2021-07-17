@@ -78,8 +78,8 @@ public class Main {
             // if isWinner is true, set up variables for next round
             if(isWinner){
                 System.out.println("Nice one! Let's play again!");
-                System.out.println("Win streak: " + wins + "\n");
                 wins++;
+                System.out.println("Win streak: " + wins + "\n");
                 total1 = total2;
                 total2 = 0;
             }
