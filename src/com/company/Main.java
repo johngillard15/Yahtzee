@@ -50,7 +50,7 @@ public class Main {
             for (Die die : dice)
                 die.roll();
 
-            for (Die die : dice) {
+            for (Die die : dice){
                 total2 += die.getFaceValue();
             }
 
@@ -58,31 +58,35 @@ public class Main {
             dice.get(0).showDice(dice);
             System.out.println("Total = " + total2);
 
-            if (total1 == total2) {
-                System.out.println("same number you lose");
+            if (total1 == total2){
+                System.out.println("same number you lose lol");
                 isWinner = false;
-            } else {
-                boolean isLarger = total2 > total1;
+            }
+            else{
+                boolean isNewRollHigher = total2 > total1;
                 switch (guess) {
                     case "h":
-                        System.out.println(isLarger ? "Number is higher you WIN" : "Number is lower you LOSE");
-                        isWinner = isLarger;
+                        System.out.println(isNewRollHigher ? "Number is higher you WIN" : "Number is lower you LOSE");
+                        isWinner = isNewRollHigher;
                         break;
                     case "l":
-                        System.out.println(isLarger ? "Number is higher you LOSE" : "Number is lower you WIN");
-                        isWinner = !isLarger;
+                        System.out.println(isNewRollHigher ? "Number is higher you LOSE" : "Number is lower you WIN");
+                        isWinner = !isNewRollHigher;
                 }
             }
 
-            if(isWinner) {
+            // if isWinner is true, set up variables for next round
+            if(isWinner){
                 System.out.println("Nice one! Let's play again!");
+                System.out.println("Win streak: " + wins + "\n");
                 wins++;
                 total1 = total2;
                 total2 = 0;
             }
-            else
-                System.out.println("Not so nice... better luck next time!");
-            System.out.println("Total wins: " + wins + "\n");
+            else {
+                System.out.println("Not so nice... Better luck next time!");
+                System.out.println("Total wins: " + wins + "\n");
+            }
         }while(isWinner);
     }
 
