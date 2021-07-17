@@ -26,6 +26,7 @@ public class Main {
 
         }
 
+        // replay until player loses; also tracks total wins
         int wins = 0;
         boolean isWinner = true;
         do{
