@@ -34,6 +34,7 @@ public class Main {
         for (Die die : dice)
             total1 += die.getFaceValue();
 
+
         // Print initial roll and ask user for guess
         dice.get(0).showDice(dice);
         System.out.println("Total = " + total1);
