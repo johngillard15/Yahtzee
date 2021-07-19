@@ -57,11 +57,10 @@ public class Main {
 
             // Print second roll and determine winning/losing message
             dice.get(0).showDice(dice);
-            System.out.println("Total = " + total2);
+            System.out.println("This Roll = " + total2);
 
             if (total1 == total2){
-                System.out.println("same number you lose lol");
-                isWinner = false;
+                System.out.println("Same number, DRAW");
             }
             else{
                 boolean isNewRollHigher = total2 > total1;
@@ -77,17 +76,20 @@ public class Main {
             }
 
             // if isWinner is true, set up variables for next round
-            if(isWinner){
+            if(total1 == total2){
+                System.out.println("Oh well. Next Round!\n");
+            }
+            else if(isWinner){
                 System.out.println("Nice one! Let's play again!");
                 wins++;
                 System.out.println("Win streak: " + wins + "\n");
-                total1 = total2;
-                total2 = 0;
             }
             else {
-                System.out.println("Not so nice... Better luck next time!");
-                System.out.println("Total wins: " + wins + "\n");
+                System.out.println("\nNot so nice... Better luck next time!");
+                System.out.println("Total wins: " + wins);
             }
+            total1 = total2;
+            total2 = 0;
         }while(isWinner);
     }
 
