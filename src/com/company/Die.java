@@ -86,6 +86,10 @@ public class Die {
         this.faceValue = faceValue;
     }
 
+    public void showNumDieFace(int num){
+
+    }
+
     public void showDice(List<Die> dice){ // put in display class?
         List<Scanner> scannerList = new ArrayList<>();
         for(Die die : dice)

@@ -6,39 +6,75 @@ import java.util.Scanner;
 
 public class Yahtzee {
     private final Scanner scan = new Scanner(System.in);
-    //public Cup myCup = new Cup();
-    public Player player;
+    public Player activePlayer;
+    public List<Player> players = new ArrayList<>();
+    private final int ROUNDS = 1;
+    private final int MAX_PLAYERS = 5;
+    private final int MIN_PLAYERS = 1;
 
     public Yahtzee(){
-        System.out.println("What is your name? ");
-        player = new Player(scan.nextLine().trim());
-    }
+        int numPlayers;
+        boolean validNumber = false;
+        do{
+            System.out.print("How many players? ");
+            numPlayers = Integer.parseInt(scan.nextLine());
+            validNumber = numPlayers >= MIN_PLAYERS && numPlayers <= MAX_PLAYERS;
 
-    // ✓ TODO refactor play to run 5 turns then display total score
-    public void play(){
-        for(int turn = 1; turn <= 5; turn++) {
-            System.out.printf("\n-- Turn %d --\n", turn);
-            turn();
+            if(!validNumber)
+                System.out.printf("You cannot have %d players. Please try again.\n", numPlayers);
+        }while(!validNumber);
+
+        int currentPlayer = 1;
+        while(players.size() < numPlayers){
+            System.out.printf("Player %d, what is your name? ", currentPlayer);
+            players.add(new Player(scan.nextLine().trim()));
+            currentPlayer++;
         }
     }
 
-    public void getSelections(){
-        System.out.println("Select the dice you want to re-roll (1-5)");
-        String input = scan.nextLine();
-        player.cup.roll(player.cup.parseSelections(input));
+    public void play(){
+        for(int round = 1; round <= ROUNDS; round++){
+            System.out.printf("\n-- Round %d --\n", round);
+            round();
+        }
+        displayResults();
     }
 
-    // ✓ TODO refactor turn to update score and display round score *(and total score)*
-    public void turn(){
-        player.cup.roll();
+    public void displayResults(){
+        Player currentWinner = players.get(0);
+        for(Player activePlayer : players){
+            if(activePlayer.score > currentWinner.score)
+                currentWinner = activePlayer;
+        }
+
+        System.out.printf("%s is the winner! Woohooo!\n", currentWinner.name);
+        System.out.printf("%s's total score: %d\n", currentWinner.name, currentWinner.score);
+    }
+
+    private void round(){
+        for(Player activePlayer : players){
+            System.out.printf("%s turn, press enter to continue...", activePlayer.name + "'s");
+            scan.nextLine();
+            turn(activePlayer);
+        }
+    }
+
+    public void turn(Player activePlayer){
+        activePlayer.cup.roll();
 
         for(int i = 0; i < 2; i++) {
-            System.out.println(player.cup.displayCup());
-            getSelections();
+            System.out.println(activePlayer.cup.displayCup());
+            getSelections(activePlayer);
         }
 
-        System.out.println(player.cup.displayCup());
-        System.out.println("Round total: " + player.updateScore());
-        System.out.println("Total score: " + player.score);
+        System.out.println(activePlayer.cup.displayCup());
+        System.out.printf("Round total: %d\n\n", activePlayer.updateScore());
+    }
+
+    public void getSelections(Player activePlayer){
+        System.out.println("Select the dice you want to re-roll (1-5)");
+        String rerolls = scan.nextLine();
+        if(rerolls.equals("")) return;
+        activePlayer.cup.roll(activePlayer.cup.parseSelections(rerolls));
     }
 }
