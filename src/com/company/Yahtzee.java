@@ -6,9 +6,8 @@ import java.util.Scanner;
 
 public class Yahtzee {
     private final Scanner scan = new Scanner(System.in);
-    public Player activePlayer;
     public List<Player> players = new ArrayList<>();
-    private final int ROUNDS = 1;
+    private final int ROUNDS = 3;
     private final int MAX_PLAYERS = 5;
     private final int MIN_PLAYERS = 1;
 
@@ -74,7 +73,9 @@ public class Yahtzee {
     public void getSelections(Player activePlayer){
         System.out.println("Select the dice you want to re-roll (1-5)");
         String rerolls = scan.nextLine();
+
         if(rerolls.equals("")) return;
+
         activePlayer.cup.roll(activePlayer.cup.parseSelections(rerolls));
     }
 }
