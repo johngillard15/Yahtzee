@@ -72,7 +72,7 @@ public class DieGUI {
         System.out.println(numberDieFaces.get(faceValue - 1));
     }
 
-    public void showDice(int ...dice){ // refactor name to describe printing dice on same line
+    public void showDice(int... dice){
         List<Scanner> scannerList = new ArrayList<>();
         for(int faceValue : dice)
             scannerList.add(new Scanner(numberDieFaces.get(faceValue - 1)));
