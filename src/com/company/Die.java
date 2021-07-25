@@ -12,6 +12,14 @@ public class Die {
         this.numberOfSides = numberOfSides;
     }
 
+    public static Die createDie(){
+        return new Die();
+    }
+
+    public static Die createDie(int numberOfSides){
+        return new Die(numberOfSides);
+    }
+
     public void roll(){
         setFaceValue((int)(Math.random() * numberOfSides) + 1);
     }

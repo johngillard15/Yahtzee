@@ -26,7 +26,7 @@ public class Yahtzee {
         int currentPlayer = 1;
         while(players.size() < numPlayers){
             System.out.printf("Player %d, what is your name? ", currentPlayer);
-            players.add(new Player(scan.nextLine().trim()));
+            players.add(Player.addPlayer(scan.nextLine().trim()));
             currentPlayer++;
         }
     }

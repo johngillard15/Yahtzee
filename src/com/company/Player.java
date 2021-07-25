@@ -9,6 +9,10 @@ public class Player {
         this.name = name;
     }
 
+    public static Player addPlayer(String name){
+        return new Player(name);
+    }
+
     public int updateScore(){
         int roundTotal = 0;
         for(Die die : cup.dice)
