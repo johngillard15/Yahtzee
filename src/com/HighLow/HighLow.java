@@ -1,6 +1,6 @@
 package com.HighLow;
 
-import com.company.DiceUI;
+import com.company.DieGUI;
 import com.company.Die;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class HighLow {
     public static void play(){
         Scanner scanner = new Scanner(System.in);
         List<Die> dice = new ArrayList<>(); // Create list of dice
-        DiceUI diceUI;
+        DieGUI dieGUI;
 
         System.out.print("How many sides will the dice have? ");
         int numberOfSides = scanner.nextInt();
@@ -21,12 +21,12 @@ public class HighLow {
 
         // add numOfDice dice to list
         if(numberOfSides == 6){
-            diceUI = new DiceUI();
+            dieGUI = new DieGUI();
             for(int i = 0; i < numOfDice; i++)
                 dice.add(new Die());
         }
         else{
-            diceUI = new DiceUI(numberOfSides);
+            dieGUI = new DieGUI(numberOfSides);
             for(int i = 0; i < numOfDice; i++)
                 dice.add(new Die(numberOfSides));
         }
@@ -41,7 +41,7 @@ public class HighLow {
 
 
         // Print initial roll and ask user for guess
-        diceUI.showDice(dice);
+        dieGUI.showDice(dice);
         System.out.println("Total = " + total1);
 
         // replay until player loses; also tracks total wins
@@ -61,7 +61,7 @@ public class HighLow {
             }
 
             // Print second roll and determine winning/losing message
-            diceUI.showDice(dice);
+            dieGUI.showDice(dice);
             System.out.println("This Roll = " + total2);
 
             if (total1 == total2){

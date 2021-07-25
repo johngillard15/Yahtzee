@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class DiceUI {
+public class DieGUI {
     public final int numberOfSides;
     public List<String> numberDieFaces = new ArrayList<>();
     public final String[] SIX_SIDED_DIE_FACES = {
@@ -41,12 +41,12 @@ public class DiceUI {
             "┗━━━━━━━━━━━┛"
     };
 
-    public DiceUI(){
+    public DieGUI(){
         numberOfSides = 6;
         numberDieFaces.addAll(Arrays.asList(SIX_SIDED_DIE_FACES));
     }
 
-    public DiceUI(int numberOfSides){
+    public DieGUI(int numberOfSides){
         this.numberOfSides = numberOfSides;
         createNumberDice(numberOfSides);
     }
