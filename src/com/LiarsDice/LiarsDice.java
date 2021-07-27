@@ -20,10 +20,25 @@ import java.util.*;
 /*
  * Liar's Dice game flow:
  *
- * start round
+ * play(); loop through rounds until there is only one player left
+ * round(); loop through players until an accusation is made
+ * turn(); player chooses to bid or accuse
+ * challenge(); determine the liar and
+ * punishment(); dish out punishment
+ *
+ * play game
+ * 1. game runs through rounds until there is only one player left
+ *
+ * round
  * 1. roll everyone's dice
  * 2. go around table and get bids
- * 3. bid until a player accuses previous player of lying
+ * 3. get bids until a player accuses previous player of lying
+ * 4 take them to court
+ *
+ * turn
+ * 1. ask player if they would like to bid or accuse
+ * 2. if bidding, ask for bid
+ * 3. if accusing, initiate challenge sequence
  *
  * challenge
  * 1. count total occurrences of all face values
@@ -121,6 +136,9 @@ public class LiarsDice {
 
         currentTurn = 1;
         currentRound++;
+
+        System.out.print("\n- End of round, press enter to continue... -\n");
+        scan.nextLine();
     }
 
     private void turn(Player activePlayer){
@@ -128,7 +146,7 @@ public class LiarsDice {
         lastBid = currentBid.clone();
 
         System.out.print("- Your dice -\n");
-        System.out.println(activePlayer.cup.displayCup());
+        showPlayerDice(activePlayer);
 
         if(currentTurn != 1){
             System.out.println("- Last Bid -");
@@ -139,6 +157,7 @@ public class LiarsDice {
             do {
                 System.out.println("Would you like to (b)id or (a)ccuse?");
                 choice = scan.next();
+                scan.nextLine();
 
                 validChoice = (choice.equalsIgnoreCase("b")) || (choice.equalsIgnoreCase("a"));
                 if (!validChoice) {
@@ -197,6 +216,9 @@ public class LiarsDice {
 
     private void accuse(Player accuser, Player accused){
         System.out.printf("\n%s has been called out by %s! But who's lying?\n", accused.name, accuser.name);
+        System.out.print(" (press enter to continue...) \n");
+        scan.nextLine();
+
         updateTable();
         showTable();
         System.out.printf("%s bid %d %d's...\n", accused.name, currentBid[1], currentBid[0]);
