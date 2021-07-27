@@ -1,9 +1,16 @@
 package com.company;
 
+import com.HighLow.HighLow;
+import com.LiarsDice.LiarsDice;
+
 public class Main {
 
     public static void main(String[] args) {
-        Yahtzee game = new Yahtzee();
+//        HighLow.play();
+
+//        Yahtzee game = new Yahtzee();
+        LiarsDice game = new LiarsDice();
+
         game.play();
     }
 }

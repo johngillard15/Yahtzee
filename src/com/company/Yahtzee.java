@@ -1,27 +1,23 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
+
+/*
+second yahtzee is joker which gives 100 bonus points to yahtzee
+calculate bonuses
+ */
 
 public class Yahtzee {
     private final Scanner scan = new Scanner(System.in);
-    public List<Player> players = new ArrayList<>();
     private final int ROUNDS = 3;
-    private final int MAX_PLAYERS = 5;
     private final int MIN_PLAYERS = 1;
+    private final int MAX_PLAYERS = 5;
+
+    public List<Player> players = new ArrayList<>();
 
     public Yahtzee(){
-        int numPlayers;
-        boolean validNumber = false;
-        do{
-            System.out.print("How many players? ");
-            numPlayers = Integer.parseInt(scan.nextLine());
-            validNumber = numPlayers >= MIN_PLAYERS && numPlayers <= MAX_PLAYERS;
-
-            if(!validNumber)
-                System.out.printf("You cannot have %d players. Please try again.\n", numPlayers);
-        }while(!validNumber);
+        int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
 
         int currentPlayer = 1;
         while(players.size() < numPlayers){
@@ -37,17 +33,6 @@ public class Yahtzee {
             round();
         }
         displayResults();
-    }
-
-    public void displayResults(){
-        Player currentWinner = players.get(0);
-        for(Player activePlayer : players){
-            if(activePlayer.score > currentWinner.score)
-                currentWinner = activePlayer;
-        }
-
-        System.out.printf("%s is the winner! Woohooo!\n", currentWinner.name);
-        System.out.printf("%s's total score: %d\n", currentWinner.name, currentWinner.score);
     }
 
     private void round(){
@@ -68,6 +53,17 @@ public class Yahtzee {
 
         System.out.println(activePlayer.cup.displayCup());
         System.out.printf("Round total: %d\n\n", activePlayer.updateScore());
+    }
+
+    public void displayResults(){
+        Player currentWinner = players.get(0);
+        for(Player activePlayer : players){
+            if(activePlayer.score > currentWinner.score)
+                currentWinner = activePlayer;
+        }
+
+        System.out.printf("%s is the winner!\n", currentWinner.name);
+        System.out.printf("%s's total score: %d\n", currentWinner.name, currentWinner.score);
     }
 
     public void getSelections(Player activePlayer){
