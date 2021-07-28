@@ -191,9 +191,9 @@ public class LiarsDice {
             // TODO: catch NumberFormatExceptions
             System.out.println("- Your bid -");
             System.out.print("Value: ");
-            value = scan.nextInt();
+            value = Integer.parseInt(scan.nextLine());
             System.out.print("Amount: ");
-            amount = scan.nextInt();
+            amount = Integer.parseInt(scan.nextLine());
 
            validBid = (amount > lastBid[1]) || (amount == lastBid[1] && value > lastBid[0]);
            if(!validBid){
