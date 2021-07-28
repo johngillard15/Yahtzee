@@ -15,7 +15,7 @@ public class Player {
         return new Player(name);
     }
 
-    public static int getPlayerCount(int min, int max){
+    public static int getPlayerCount(int MIN, int MAX){
         Scanner scan = new Scanner(System.in);
 
         int numPlayers;
@@ -23,11 +23,11 @@ public class Player {
         do{
             System.out.print("How many players will there be? ");
             numPlayers = Integer.parseInt(scan.nextLine());
-            validNumber = numPlayers >= min && numPlayers <= max;
+            validNumber = numPlayers >= MIN && numPlayers <= MAX;
 
             if(!validNumber){
                 System.out.printf("You cannot have %d player%s.\n", numPlayers, numPlayers != 1 ? "s" : "");
-                System.out.printf("Please pick a number between %d and %d.\n", min, max);
+                System.out.printf("Please pick a number between %d and %d.\n", MIN, MAX);
             }
         }while(!validNumber);
 

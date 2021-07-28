@@ -207,7 +207,7 @@ public class LiarsDice {
            }
         }while(!validBid);
 
-        // TODO: now get the probablity of each bid
+        // TODO: now get the probability of each bid
         currentBid[0] = value;
         currentBid[1] = amount;
         System.out.printf("\n%s has bid %d %d's.\n", activePlayer.name, currentBid[1], currentBid[0]);
@@ -254,7 +254,7 @@ public class LiarsDice {
 
     private void updateTable(){
         for(Player player : players){
-            int[] dieValues = parseCup(player);
+            int[] dieValues = player.cup.parseCup();
             for(int faceUpValue : dieValues){
                 tableDice.put(faceUpValue, tableDice.get(faceUpValue) + 1);
             }
@@ -277,19 +277,7 @@ public class LiarsDice {
     }
 
     public void showPlayerDice(Player player){
-        int[] dieValues = parseCup(player);
-
-        dieGUI.showDice(dieValues);
-    }
-
-    public int[] parseCup(Player player){
-        String[] cupDieValues = player.cup.displayCup().split(" ");
-        int[] dieValues = new int[cupDieValues.length];
-
-        for(int i = 0; i < dieValues.length; i++)
-            dieValues[i] = Integer.parseInt(cupDieValues[i]);
-
-        return dieValues;
+        dieGUI.showDice(player.cup.parseCup());
     }
 
     private void displayResults(){

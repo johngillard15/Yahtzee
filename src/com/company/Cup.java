@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Cup {
@@ -10,6 +11,14 @@ public class Cup {
     public Cup(){
         while(dice.size() < MAX_DIE)
             dice.add(Die.createDie());
+    }
+
+    public void addDie(){
+        dice.add(Die.createDie());
+    }
+
+    public void removeDie(){
+        dice.remove(0);
     }
 
     public void roll(){
@@ -26,23 +35,6 @@ public class Cup {
             roll(selection);
     }
 
-    public void addDie(){
-        dice.add(Die.createDie());
-    }
-
-    public void removeDie(){
-        dice.remove(0);
-    }
-
-    public String displayCup(){
-        String output = "";
-
-        for(Die die : dice)
-            output += die.faceValue + " ";
-
-        return output.trim();
-    }
-
     public List<Integer> parseSelections(String input){
         String[] inputArr = input.split(" ");
 
@@ -51,5 +43,21 @@ public class Cup {
             selections.add(Integer.parseInt(number) - 1);
 
         return selections;
+    }
+
+    public int[] parseCup(){
+        int[] dieArr = new int[dice.size()];
+        for(int i = 0; i < dieArr.length; i++)
+            dieArr[i] = dice.get(i).faceValue;
+
+        return dieArr;
+    }
+
+    public String displayCup(){
+        String output = "";
+        for(Die die : dice)
+            output += die.faceValue + " ";
+
+        return output;
     }
 }
