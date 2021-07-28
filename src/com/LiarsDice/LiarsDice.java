@@ -68,11 +68,10 @@ public class LiarsDice {
     private int currentTurn = 1;
     private boolean challenge = false;
 
-    // TODO put all bids in a list
+    // TODO maybe put all bids in a list?
     // TODO add question for dice amount, spot on as well as liar
-    // TODO change keys in tableDice to words
     // TODO use getTotalDiceInPlay somehow
-    // TODO there is still a bug at the end of a round where it needs 2 enters to move to the next player's turn
+    // TODO there is still a minor bug at the end of a round where it needs 2 enters to move to the next player's turn
     public LiarsDice(){
         int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
 
