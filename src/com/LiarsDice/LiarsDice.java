@@ -198,16 +198,19 @@ public class LiarsDice {
         do{
             // Handles any issues entering a non-number so the program doesn't crash
             do{
+                String problemVar = "";
                 try{
                     System.out.println("- Your bid -");
                     System.out.print("Value: ");
+                    problemVar = "value";
                     value = Integer.parseInt(scan.nextLine());
                     System.out.print("Amount: ");
+                    problemVar = "amount";
                     amount = Integer.parseInt(scan.nextLine());
                     break;
                 }
                 catch (NumberFormatException e){
-                    System.out.println("\nThere was an error parsing your bid. Please try again.");
+                    System.out.printf("There was an error parsing your bid %s. Please try again.\n\n", problemVar);
                 }
             }while(true);
 
