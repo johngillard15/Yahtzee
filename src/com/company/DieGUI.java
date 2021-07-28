@@ -69,7 +69,7 @@ public class DieGUI {
     }
 
     public void showDie(int faceValue){
-        System.out.println(numberDieFaces.get(faceValue - 1));
+        System.out.printf("%s", numberDieFaces.get(faceValue - 1));
     }
 
     public void showDice(int... dice){
@@ -81,7 +81,7 @@ public class DieGUI {
             StringBuilder line = new StringBuilder();
             for(Scanner scanner : scannerList)
                 line.append(scanner.nextLine()).append(" ");
-            System.out.println(line);
+            System.out.printf("%s\n", line);
         }
 
         for(Scanner scanner : scannerList)

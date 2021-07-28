@@ -68,7 +68,11 @@ public class LiarsDice {
     private int currentTurn = 1;
     private boolean challenge = false;
 
-    public LiarsDice(){ // TODO add question for dice amount, spot on as well as liar
+    // TODO put all bids in a list
+    // TODO add question for dice amount, spot on as well as liar
+    // TODO change keys in tableDice to words
+    // TODO use getTotalDiceInPlay somehow
+    public LiarsDice(){
         int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
 
         int currentPlayer = 1;
@@ -150,7 +154,9 @@ public class LiarsDice {
 
         if(currentTurn != 1){
             System.out.println("- Last Bid -");
-            System.out.printf("%d %d's\n", lastBid[1], lastBid[0]);
+            //System.out.printf("%d %d's\n", lastBid[1], lastBid[0]);
+            dieGUI.showDie(lastBid[0]);
+            System.out.printf(" x%d\n", lastBid[1]);
 
             String choice;
             boolean validChoice;
