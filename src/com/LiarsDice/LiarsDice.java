@@ -14,7 +14,7 @@ import java.util.*;
  *
  * @since 24/7/2021
  * @author John Gillard
- * @version 27/7/2021
+ * @version 28/7/2021
  */
 
 /*
@@ -96,6 +96,7 @@ public class LiarsDice {
     }
 
     private void round(){
+        cls();
         System.out.printf("\n-- ROUND %d --", currentRound);
 
         for(Player player : players){
@@ -109,6 +110,7 @@ public class LiarsDice {
 
             System.out.printf("\n- %s turn, press enter to continue... -\n", players.get(currentPlayer).name + "'s");
             scan.nextLine();
+            cls();
 
             turn(players.get(currentPlayer));
 
@@ -284,8 +286,18 @@ public class LiarsDice {
         return totalDiceInPlay;
     }
 
-    public void showPlayerDice(Player player){
+    private void showPlayerDice(Player player){
         dieGUI.showDice(player.cup.parseCup());
+    }
+
+    private void cls(){
+        StringBuilder why = new StringBuilder();
+        int lines = 20;
+
+        for(int i = 0; i < lines; i++)
+            why.append("\n");
+
+        System.out.print(why);
     }
 
     private void displayResults(){
