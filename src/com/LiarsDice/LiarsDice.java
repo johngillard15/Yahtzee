@@ -108,9 +108,9 @@ public class LiarsDice {
             if(currentPlayer == players.size())
                 currentPlayer = 0;
 
+            cls();
             System.out.printf("\n- %s turn, press enter to continue... -\n", players.get(currentPlayer).name + "'s");
             scan.nextLine();
-            cls();
 
             turn(players.get(currentPlayer));
 
@@ -196,12 +196,20 @@ public class LiarsDice {
         int value, amount;
         boolean validBid;
         do{
-            // TODO: catch NumberFormatExceptions
-            System.out.println("- Your bid -");
-            System.out.print("Value: ");
-            value = Integer.parseInt(scan.nextLine());
-            System.out.print("Amount: ");
-            amount = Integer.parseInt(scan.nextLine());
+            // Handles any issues entering a non-number so the program doesn't crash
+            do{
+                try{
+                    System.out.println("- Your bid -");
+                    System.out.print("Value: ");
+                    value = Integer.parseInt(scan.nextLine());
+                    System.out.print("Amount: ");
+                    amount = Integer.parseInt(scan.nextLine());
+                    break;
+                }
+                catch (NumberFormatException e){
+                    System.out.println("\nThere was an error parsing your bid. Please try again.");
+                }
+            }while(true);
 
            validBid = (amount > lastBid[1]) || (amount == lastBid[1] && value > lastBid[0]);
            if(!validBid){
@@ -292,7 +300,7 @@ public class LiarsDice {
 
     private void cls(){
         StringBuilder why = new StringBuilder();
-        int lines = 20;
+        int lines = 40;
 
         for(int i = 0; i < lines; i++)
             why.append("\n");
