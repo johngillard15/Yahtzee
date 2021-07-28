@@ -274,10 +274,12 @@ public class LiarsDice {
         }
     }
 
-    private int getTotalDiceInPlay(){
+    private int getTotalDiceInPlay(){ // TODO change this name
         int totalDiceInPlay = 0;
-        for(Player player : players)
-            totalDiceInPlay += player.cup.dice.size();
+
+        updateTable();
+        for(int amount : tableDice.values())
+            totalDiceInPlay += amount;
 
         return totalDiceInPlay;
     }
