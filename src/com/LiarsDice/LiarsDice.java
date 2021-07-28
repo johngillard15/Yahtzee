@@ -72,6 +72,7 @@ public class LiarsDice {
     // TODO add question for dice amount, spot on as well as liar
     // TODO change keys in tableDice to words
     // TODO use getTotalDiceInPlay somehow
+    // TODO there is still a bug at the end of a round where it needs 2 enters to move to the next player's turn
     public LiarsDice(){
         int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
 
@@ -156,25 +157,24 @@ public class LiarsDice {
 
         if(currentTurn != 1){
             System.out.println("- Last Bid -");
-            //System.out.printf("%d %d's\n", lastBid[1], lastBid[0]);
+            //System.out.printf("%d [%d]'s\n", lastBid[1], lastBid[0]);
             dieGUI.showDie(lastBid[0]);
             System.out.printf(" x%d\n", lastBid[1]);
 
             String choice;
             boolean validChoice;
-            do {
+            do{
                 System.out.println("Would you like to (b)id or (a)ccuse?");
-                choice = scan.next();
-                scan.nextLine();
+                choice = scan.nextLine();
 
                 validChoice = (choice.equalsIgnoreCase("b")) || (choice.equalsIgnoreCase("a"));
                 if (!validChoice) {
                     System.out.printf("\"%s\" is not a valid option.\n" +
-                            "Please choose \"b\" to place a bid and \"a\" to accuse the previous player.\n", choice);
+                            "Please choose \"b\" to place a bid and \"a\" to accuse the previous player.\n\n", choice);
                 }
-            } while (!validChoice);
+            }while (!validChoice);
 
-            switch (choice) {
+            switch (choice){
                 case "b":
                     bid(activePlayer);
                     break;
@@ -193,33 +193,36 @@ public class LiarsDice {
     }
 
     private void bid(Player activePlayer){
-        int value, amount;
+        int value = 0, amount = 0;
         boolean validBid;
         do{
             // Handles any issues entering a non-number so the program doesn't crash
             do{
                 String problemVar = "";
+                String input = "";
                 try{
                     System.out.println("- Your bid -");
                     System.out.print("Value: ");
                     problemVar = "value";
-                    value = Integer.parseInt(scan.nextLine());
+                    input = scan.nextLine();
+                    value = Integer.parseInt(input);
                     System.out.print("Amount: ");
                     problemVar = "amount";
-                    amount = Integer.parseInt(scan.nextLine());
+                    input = scan.nextLine();
+                    amount = Integer.parseInt(input);
                     break;
                 }
                 catch (NumberFormatException e){
-                    System.out.printf("There was an error parsing your bid %s. Please try again.\n\n", problemVar);
+                    System.out.printf("\"%s\" is not a valid bid %s. Please try again.\n\n", input, problemVar);
                 }
             }while(true);
 
            validBid = (amount > lastBid[1]) || (amount == lastBid[1] && value > lastBid[0]);
            if(!validBid){
-               System.out.printf("\nA bid of %d %d's is not currently possible.\n", amount, value);
+               System.out.printf("\nA bid of %d [%d]'s is not currently possible.\n", amount, value);
                System.out.println("The next bid must have:");
                if(lastBid[0] < 6){
-                   System.out.printf("%d dice, higher than a %d\n", lastBid[1], lastBid[0]);
+                   System.out.printf("%d dice, higher than a [%d]\n", lastBid[1], lastBid[0]);
                    System.out.println("OR");
                }
                System.out.printf("%d or more dice of any value.\n", lastBid[1] + 1);
@@ -229,7 +232,7 @@ public class LiarsDice {
         // TODO: now get the probability of each bid
         currentBid[0] = value;
         currentBid[1] = amount;
-        System.out.printf("\n%s has bid %d %d's.\n", activePlayer.name, currentBid[1], currentBid[0]);
+        //System.out.printf("\n%s has bid %d [%d]'s.\n", activePlayer.name, currentBid[1], currentBid[0]);
     }
 
     private void accuse(Player accuser, Player accused){
@@ -239,10 +242,10 @@ public class LiarsDice {
 
         updateTable();
         showTable();
-        System.out.printf("%s bid %d %d's...\n", accused.name, currentBid[1], currentBid[0]);
+        System.out.printf("%s bid %d [%d]'s...\n", accused.name, currentBid[1], currentBid[0]);
 
         if(tableDice.get(currentBid[0]) >= currentBid[1]){
-            System.out.printf("...and there are %d %d's!\n", tableDice.get(currentBid[0]), currentBid[0]);
+            System.out.printf("...and there are %d [%d]'s!\n", tableDice.get(currentBid[0]), currentBid[0]);
             System.out.printf("\n%s is innocent! For shame, %s.\n", accused.name, accuser.name);
             punishment(accuser);
         }
@@ -283,11 +286,11 @@ public class LiarsDice {
     private void showTable(){
         System.out.println("\nDice in play:");
         for(int faceValue : tableDice.keySet()){
-            System.out.printf("%d's: %d\n", faceValue, tableDice.get(faceValue));
+            System.out.printf("[%d]'s: %d\n", faceValue, tableDice.get(faceValue));
         }
     }
 
-    private int getTotalDiceInPlay(){ // TODO change this name
+    private int getTotalDiceInPlay(){ // TODO change this name if i ever get around to using it
         int totalDiceInPlay = 0;
 
         updateTable();
