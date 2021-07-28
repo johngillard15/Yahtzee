@@ -22,34 +22,34 @@ import java.util.*;
  *
  * play(); loop through rounds until there is only one player left
  * round(); loop through players until an accusation is made
- * turn(); player chooses to bid or accuse
- * challenge(); determine the liar and
- * punishment(); dish out punishment
+ * turn(); player chooses to bid or accuse, if bid player provides the die value and the amount to bet
+ * challenge(Player accuser, Player accused); determine the liar and send them to punishment()
+ * punishment(Player liar); dish out punishment (remove die/kick out of game)
+ * updateTable(); loop through player list and update the tableDice map; remember to reset after round
  *
  * play game
  * 1. game runs through rounds until there is only one player left
  *
  * round
  * 1. roll everyone's dice
- * 2. go around table and get bids
+ * 2. loop through players and get bids
  * 3. get bids until a player accuses previous player of lying
- * 4 take them to court
+ * 4. take them to court -> challenge
  *
  * turn
  * 1. ask player if they would like to bid or accuse
- * 2. if bidding, ask for bid
- * 3. if accusing, initiate challenge sequence
+ * 2. if bidding, ask for bid (value and amount)
+ * 3. next bids must either bid a higher amount of any value, or the same amount of higher value
+ * 4. if accusing, initiate challenge sequence
  *
  * challenge
- * 1. count total occurrences of all face values
- * 2. check if player's bid was possible
- * 3. if bid was matched or exceeded (determined by the tableDice HashMap), mark accuser as liar
+ * 1. count total occurrences of all face values (in tableDice map)
+ * 2. check if player's bid was possible (amount >= all die on table)
+ * 3. if bid was matched or exceeded (determined by the tableDice HashMap), mark accuser as liar;
  *  if bid was not possible, mark bidder as liar
- * 4. liars get 1 die removed from their die count, or get removed from the game if they only have 1 die
- * 5. next round starts at the loser
- *
- * Plan of attack:
- *
+ * 4. liars get 1 die removed from their die count (remove an element from dice list in player.cup), or get removed
+ * from the game if they only have 1 die at time of punishment (remove that player from player list)
+ * 5. if the player list has only 1 element, end the game and declare the winner
  */
 
 public class LiarsDice {
@@ -68,7 +68,7 @@ public class LiarsDice {
     private int currentTurn = 1;
     private boolean challenge = false;
 
-    public LiarsDice(){
+    public LiarsDice(){ // TODO add question for dice amount, spot on as well as liar
         int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
 
         int currentPlayer = 1;
@@ -166,7 +166,6 @@ public class LiarsDice {
                 }
             } while (!validChoice);
 
-            // TODO: ask cliff about switching language levels (switch expressions/arrow case)
             switch (choice) {
                 case "b":
                     bid(activePlayer);
