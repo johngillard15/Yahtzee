@@ -304,13 +304,13 @@ public class LiarsDice {
     }
 
     private void cls(){
-        StringBuilder why = new StringBuilder();
+        StringBuilder blankLines = new StringBuilder();
         int lines = 40;
 
         for(int i = 0; i < lines; i++)
-            why.append("\n");
+            blankLines.append("\n");
 
-        System.out.print(why);
+        System.out.print(blankLines);
     }
 
     private void displayResults(){

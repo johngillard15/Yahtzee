@@ -55,6 +55,15 @@ public class Yahtzee {
         System.out.printf("Round total: %d\n\n", activePlayer.updateScore());
     }
 
+    public void getSelections(Player activePlayer){
+        System.out.println("Select the dice you want to re-roll (1-5)");
+        String rerolls = scan.nextLine();
+
+        if(rerolls.equals("")) return;
+
+        activePlayer.cup.roll(activePlayer.cup.parseSelections(rerolls));
+    }
+
     public void displayResults(){
         Player currentWinner = players.get(0);
         for(Player activePlayer : players){
@@ -64,14 +73,5 @@ public class Yahtzee {
 
         System.out.printf("%s is the winner!\n", currentWinner.name);
         System.out.printf("%s's total score: %d\n", currentWinner.name, currentWinner.score);
-    }
-
-    public void getSelections(Player activePlayer){
-        System.out.println("Select the dice you want to re-roll (1-5)");
-        String rerolls = scan.nextLine();
-
-        if(rerolls.equals("")) return;
-
-        activePlayer.cup.roll(activePlayer.cup.parseSelections(rerolls));
     }
 }

@@ -34,6 +34,10 @@ public class Cup {
         for(int selection : selections)
             roll(selection);
     }
+    public void roll(int... selections){
+        for(int selection : selections)
+            roll(selection);
+    }
 
     public List<Integer> parseSelections(String input){
         String[] inputArr = input.split(" ");
@@ -44,6 +48,15 @@ public class Cup {
 
         return selections;
     }
+//    public int[] parseSelections(String input){
+//        String[] inputArr = input.split(" ");
+//
+//        int[] selections = new int[inputArr.length];
+//        for(int i = 0; i < selections.length; i++)
+//            selections[i] = Integer.parseInt(inputArr[i]);
+//
+//        return selections;
+//    }
 
     public int[] parseCup(){
         int[] dieArr = new int[dice.size()];

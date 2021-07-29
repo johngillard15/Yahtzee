@@ -1,5 +1,6 @@
 package com.Yahtzee;
 
+import com.company.DieGUI;
 import com.company.Player;
 
 import java.util.ArrayList;
@@ -36,13 +37,14 @@ import java.util.Scanner;
  * 1. game goes for 13 rounds (until last player's scorecards is filled)
  *
  * round
- * 1. loop through players
+ * 1. loop through all players
  *
  * turn
  * 1. initial dice roll
  * 2. ask player if they want to re-roll some or all dice (up to 2 times)
- * 3. ask player which score they would like to contribute to
- * 4. send player over to calculateScore method along with score selection
+ * 3. determine what scores are possible based on current roll and the players scorecard
+ * 4. ask player which score they would like to contribute to
+ * 5. send player over to calculateScore method along with score selection
  *
  * showing combos
  * 1. print player's scoresheet at start of turn
@@ -72,6 +74,7 @@ import java.util.Scanner;
 
 public class Yahtzee {
     private final Scanner scan = new Scanner(System.in);
+    private static final DieGUI dieGUI = new DieGUI();
     private final int MIN_PLAYERS = 1;
     private final int MAX_PLAYERS = 5;
 
@@ -83,20 +86,60 @@ public class Yahtzee {
         int currentPlayer = 1;
         while(players.size() < numPlayers){
             System.out.printf("Player %d, what is your name? ", currentPlayer);
-            players.add(Player.addPlayer(scan.nextLine().trim()));
+            String name = scan.nextLine().trim();
+            players.add(Player.addPlayer(name));
             currentPlayer++;
         }
     }
 
     public void play(){
+        for(int round = 1; round <= 13; round++){
+            System.out.printf("\n-- Round %d --\n", round);
+            round();
+        }
 
+        displayResults();
     }
 
     private void round(){
-
+        for(Player activePlayer : players){
+            System.out.printf("%s turn, press enter to continue...", activePlayer.name + "'s");
+            scan.nextLine();
+            turn(activePlayer);
+        }
     }
 
-    private void turn(){
+    private void turn(Player activePlayer){
+        activePlayer.scorecard.showScorecard();
+
+        activePlayer.cup.roll();
+        System.out.println("- Your roll -");
+
+        for(int i = 0; i < 2; i++){
+            System.out.println(activePlayer.cup.displayCup());
+            System.out.printf("Re-roll %d\n", i);
+            getSelections(activePlayer);
+        }
+
+        activePlayer.scorecard.checkCombos(activePlayer.cup.parseCup());
+        activePlayer.scorecard.showCombos();
+    }
+
+    public void getSelections(Player activePlayer){
+        System.out.println("Select the dice you want to re-roll (1-5)");
+        String rerolls = scan.nextLine().trim();
+
+        if(rerolls.equals(""))
+            return;
+
+        activePlayer.cup.roll(activePlayer.cup.parseSelections(rerolls));
+    }
+
+    private void showPlayerDice(Player player){
+        dieGUI.showDice(player.cup.parseCup());
+    }
+
+    private void displayResults(){
 
     }
 }
