@@ -6,6 +6,7 @@ public class Player {
     public String name;
     public Cup cup = new Cup();
     public int score = 0;
+    public ScoreCard scorecard = new ScoreCard();
 
     public Player(String name){
         this.name = name;

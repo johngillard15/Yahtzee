@@ -82,7 +82,7 @@ public class LiarsDice {
             players.add(Player.addPlayer(name));
             System.out.printf("Hello, %s.\n", name);
             currentPlayer++;
-        }while(players.size() != numPlayers);
+        }while(players.size() < numPlayers);
 
         for(int faceValue = 1; faceValue <= 6; faceValue++)
             tableDice.put(faceValue, 0);
