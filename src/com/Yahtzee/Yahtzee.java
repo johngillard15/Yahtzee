@@ -4,6 +4,7 @@ import com.company.DieGUI;
 import com.company.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -113,24 +114,27 @@ public class Yahtzee {
         activePlayer.scorecard.showScorecard();
 
         activePlayer.cup.roll();
-        System.out.println("- Your roll -");
+        System.out.println("\n- Initial roll -");
+        System.out.println(activePlayer.cup.displayCup());
 
         for(int i = 0; i < 2; i++){
-            System.out.println(activePlayer.cup.displayCup());
-            System.out.printf("Re-roll %d\n", i);
+            System.out.printf("Re-roll %d\n", i + 1);
             getSelections(activePlayer);
+            System.out.printf("result: %s\n", activePlayer.cup.displayCup());
         }
 
         activePlayer.scorecard.checkCombos(activePlayer.cup.parseCup());
-        activePlayer.scorecard.showCombos();
+        activePlayer.scorecard.showPossibleCombos();
     }
 
     public void getSelections(Player activePlayer){
-        System.out.println("Select the dice you want to re-roll (1-5)");
+        System.out.print("Select the dice you want to re-roll (1-5) ");
         String rerolls = scan.nextLine().trim();
 
-        if(rerolls.equals(""))
+        if(rerolls.equals("")){
+            System.out.println("-No Roll-");
             return;
+        }
 
         activePlayer.cup.roll(activePlayer.cup.parseSelections(rerolls));
     }

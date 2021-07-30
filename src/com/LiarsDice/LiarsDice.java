@@ -105,10 +105,12 @@ public class LiarsDice {
 
 
         while(!challenge){
+            // rollover if end of players list reached
             if(currentPlayer == players.size())
                 currentPlayer = 0;
 
-            cls();
+            if(currentTurn != 1)
+                cls();
             System.out.printf("\n- %s turn, press enter to continue... -\n", players.get(currentPlayer).name + "'s");
             scan.nextLine();
 
@@ -116,13 +118,15 @@ public class LiarsDice {
 
             if(challenge){
                 int lastPlayer;
+
                 if(currentPlayer == 0)
                     lastPlayer = players.size() - 1;
                 else
                     lastPlayer = currentPlayer - 1;
+
                 accuse(players.get(currentPlayer), players.get(lastPlayer));
             }
-            else if(currentPlayer >= players.size() - 1){
+            else if(currentPlayer >= players.size() - 1){ // rollover to fix IndexOutOfBounds
                 currentPlayer = -1;
             }
             currentPlayer++;

@@ -2,6 +2,7 @@ package com.company;
 
 import com.HighLow.HighLow;
 import com.LiarsDice.LiarsDice;
+import com.Yahtzee.Yahtzee;
 
 import java.util.Scanner;
 
