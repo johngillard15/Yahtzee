@@ -72,9 +72,7 @@ import java.util.Scanner;
  *
  */
 
-// TODO: use showPlayerDice
-// TODO: add upper bonus
-// TODO: implement joker rules
+// TODO: now try to sort dice list to help player see combos
 
 public class Yahtzee {
     private final Scanner scan = new Scanner(System.in);

@@ -1,7 +1,6 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Cup {
@@ -19,6 +18,14 @@ public class Cup {
 
     public void removeDie(){
         dice.remove(0);
+    }
+
+    public void sort(){
+        // make new dice list
+        // use a for loop to get through the og dice list
+        // somehow compare the face values and get their order; save their ordered indices in an array or something
+        // loop though the new dice list and add elements from OG based of saved positions
+        // assign the value of OG dice list to the new list
     }
 
     public void roll(){
