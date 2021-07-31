@@ -16,7 +16,7 @@ import java.util.Scanner;
  *
  * @since 28/7/2021
  * @author John Gillard
- * @version 28/7/2021
+ * @version 31/7/2021
  */
 
 /* Yahtzee game flow:
@@ -71,6 +71,10 @@ import java.util.Scanner;
  * 0. any rolls that cannot be applied to the available combos are forced to mark one with a 0
  *
  */
+
+// TODO: use showPlayerDice
+// TODO: add upper bonus
+// TODO: implement joker rules
 
 public class Yahtzee {
     private final Scanner scan = new Scanner(System.in);
