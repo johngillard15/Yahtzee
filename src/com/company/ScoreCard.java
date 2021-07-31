@@ -189,23 +189,22 @@ public class ScoreCard {
             }
         }while(true);
 
+        /*
+         * to maintain the order from String[] COMBOS, and add points to the option the player picked:
+         * - first check if that combo was already used, don't bother checking if it has points
+         * - checks if that combo is in possibleCombos
+         * - if it is, add 1 to count, which should now correlate to where it was when the player saw it
+         * - check if count and choice are equal; was that what the player chose?
+         * - if so, add the points from possibleCombos to the player's scorecard, exit from loop
+         * - if not, move to next combo
+         */
         int count = 0;
         for(String combo : COMBOS){
-            /* to maintain the order from String[] COMBOS, and add points to the option the player picked:
-             * - first check if that combo was already used, don't bother checking if it has points
-             * - checks if that combo is in possibleCombos
-             * - if it is, add 1 to count, which should now correlate to where it was when the player saw it
-             * - check if count and choice are equal; was that what the player chose?
-             * - if so, add the points from possibleCombos to the player's scorecard, exit from loop
-             * - if not, move to next combo
-             */
-            if(possibleCombos.get(combo) != -1){
-                if(possibleCombos.containsKey(combo))
-                    count++;
-                if(count == choice){
-                    scorecard.put(combo, possibleCombos.get(combo));
-                    break;
-                }
+            if(possibleCombos.containsKey(combo))
+                count++;
+            if(count == choice){
+                scorecard.put(combo, possibleCombos.get(combo));
+                break;
             }
         }
     }
@@ -257,6 +256,7 @@ public class ScoreCard {
     }
 
     public void calculateTotalScore(){
-
+        for(int points : scorecard.values())
+            totalScore += points;
     }
 }
