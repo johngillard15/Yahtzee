@@ -99,7 +99,7 @@ public class Yahtzee {
 
     public void play(){
         for(int round = 1; round <= 13; round++){
-            System.out.printf("\n-- Round %d --\n", round);
+            System.out.printf("\n-- Round %d --", round);
             if(round == 13)
                 System.out.println("FINAL ROUND");
             round();
@@ -121,12 +121,14 @@ public class Yahtzee {
 
         activePlayer.cup.roll();
         System.out.println("\n- Initial roll -");
-        System.out.println(activePlayer.cup.displayCup());
+        //System.out.println(activePlayer.cup.displayCup());
+        showPlayerDice(activePlayer);
 
         for(int i = 0; i < 2; i++){
             System.out.printf("- Re-roll %d\n", i + 1);
             getSelections(activePlayer);
-            System.out.printf("result: %s\n", activePlayer.cup.displayCup());
+            //System.out.printf("result: %s\n", activePlayer.cup.displayCup());
+            showPlayerDice(activePlayer);
         }
 
         activePlayer.scorecard.checkCombos(activePlayer.cup.parseCup());

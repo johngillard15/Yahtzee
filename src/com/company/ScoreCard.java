@@ -141,8 +141,12 @@ public class ScoreCard {
                         break;
 
                     case "YAHTZEE":
-                        if(currentFaceValues.size() == 1)
-                            possibleCombos.put(combo, getPoints(combo));
+                        if(currentFaceValues.size() == 1){
+                            if(scorecard.get(combo) == -1)
+                                possibleCombos.put(combo, getPoints(combo));
+                            else
+                                possibleCombos.put(combo, scorecard.get(combo) + getPoints(combo));
+                        }
                         break;
                 }
             }
@@ -247,7 +251,10 @@ public class ScoreCard {
                 points = 40;
                 break;
             case "YAHTZEE":
-                points = 50;
+                if(scorecard.get("YAHTZEE") >= 50)
+                    points = 100;
+                else
+                    points = 50;
                 break;
             default:
         }
@@ -256,7 +263,11 @@ public class ScoreCard {
     }
 
     public void calculateTotalScore(){
-        for(int points : scorecard.values())
-            totalScore += points;
+        for(String combo : COMBOS){
+            totalScore += scorecard.get(combo);
+
+            if(combo.equals("SIXES") && totalScore >= 63)
+                totalScore += 35;
+        }
     }
 }
