@@ -16,19 +16,19 @@ public class ScoreCard {
 
     public ScoreCard(){
         for(String combo : COMBOS){
-            scorecard.put(combo, -1);
+            scorecard.put(combo, null);
         }
     }
 
     public void showScorecard(){
         System.out.println("- Your ScoreCard -");
 
-        for(String combo : COMBOS){
+        for(String combo : COMBOS){ // TODO: for some reason scores keep getting reset to null
             if(combo.equals("ONES"))
                 System.out.println("Upper Section");
             else if(combo.equals("THREE_OF_A_KIND"))
                 System.out.println("Lower Section");
-            System.out.printf("%s: %s\n", combo, /*scorecard.get(combo) == -1 ? "---" :*/ scorecard.get(combo));
+            System.out.printf("%s: %s\n", combo, scorecard.get(combo) == null ? "---" : scorecard.get(combo));
         }
     }
 
@@ -44,8 +44,8 @@ public class ScoreCard {
         }
 
         Arrays.sort(dice);
-        for(String combo : scorecard.keySet()){
-            if(scorecard.get(combo) == -1){
+        for(String combo : COMBOS){
+            if(scorecard.get(combo) == null){
                 switch(combo){
                     case "ONES":
                         if(currentFaceValues.containsKey(1))
@@ -112,6 +112,9 @@ public class ScoreCard {
                         break;
 
                     case "SMALL_STRAIGHT":
+                        // TODO: won't properly check for small straight if there are duplicates
+                        // of any of the first 3 values;
+                        // maybe use nested for loops and check each value individually
                         int[] diceShort = new int[4];
                         System.arraycopy(dice, 0, diceShort, 0, diceShort.length);
 
@@ -150,27 +153,9 @@ public class ScoreCard {
         if(possibleCombos.isEmpty()){
             System.out.println("There are no valid combos on your scorecard for this roll.\n" +
                     "You must choose a score to fill with a 0:");
-            for(String combo : scorecard.keySet()){
-                if(scorecard.get(combo) == -1){
-                    switch(combo){
-                        case "ONES":
-                        case "TWOS":
-                        case "THREES":
-                        case "FOURS":
-                        case "FIVES":
-                        case "SIXES":
-                        case "THREE_OF_A_KIND":
-                        case "FOUR_OF_A_KIND":
-                        case "FULL_HOUSE":
-                        case "SMALL_STRAIGHT":
-                        case "LARGE_STRAIGHT":
-                        case "CHANCE":
-                        case "YAHTZEE":
-                            possibleCombos.put(combo, 0);
-                            break;
-                        default:
-                    }
-                }
+            for(String combo : COMBOS){
+                if(scorecard.get(combo) == null)
+                    possibleCombos.put(combo, 0);
             }
         }
     }
