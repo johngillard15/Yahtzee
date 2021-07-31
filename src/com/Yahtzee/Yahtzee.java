@@ -118,23 +118,39 @@ public class Yahtzee {
         System.out.println(activePlayer.cup.displayCup());
 
         for(int i = 0; i < 2; i++){
-            System.out.printf("Re-roll %d\n", i + 1);
+            System.out.printf("- Re-roll %d\n", i + 1);
             getSelections(activePlayer);
             System.out.printf("result: %s\n", activePlayer.cup.displayCup());
         }
 
         activePlayer.scorecard.checkCombos(activePlayer.cup.parseCup());
         activePlayer.scorecard.showPossibleCombos();
+        activePlayer.scorecard.getPlayerChoice();
+
     }
 
     public void getSelections(Player activePlayer){
-        System.out.print("Select the dice you want to re-roll (1-5) ");
-        String rerolls = scan.nextLine().trim();
+        String rerolls;
 
-        if(rerolls.equals("")){
-            System.out.println("-No Roll-");
-            return;
-        }
+        do{
+            System.out.print("Select the dice you want to re-roll (1-5) ");
+            rerolls = scan.nextLine().trim();
+
+            if(rerolls.equals("")){
+                System.out.println("-No Roll-");
+                return;
+            }
+
+            try{
+                // remove all whitespace from input,
+                // and if there is a problem parsing it as an integer, it can't be a valid selection
+                Integer.parseInt(rerolls.replaceAll("\\s", ""));
+                break;
+            }
+            catch(NumberFormatException e){
+                System.out.println("That is not a valid selection. Please try again.\n");
+            }
+        }while(true);
 
         activePlayer.cup.roll(activePlayer.cup.parseSelections(rerolls));
     }

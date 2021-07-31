@@ -71,6 +71,6 @@ public class Cup {
         for(Die die : dice)
             output += die.faceValue + " ";
 
-        return output;
+        return output.trim();
     }
 }

@@ -1,12 +1,9 @@
 package com.company;
 
-import java.sql.SQLOutput;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class ScoreCard {
+    public final Scanner scan = new Scanner(System.in);
     public final String[] COMBOS = {"ONES", "TWOS", "THREES", "FOURS", "FIVES", "SIXES",
             "THREE_OF_A_KIND", "FOUR_OF_A_KIND", "SMALL_STRAIGHT", "LARGE_STRAIGHT", "FULL_HOUSE", "CHANCE", "YAHTZEE"};
     public final int[][] SMALL_STRAIGHTS = {{1, 2, 3, 4}, {2, 3, 4, 5}, {3, 4, 5, 6}};
@@ -14,6 +11,7 @@ public class ScoreCard {
 
     public Map<String, Integer> scorecard = new HashMap<>();
     public Map<String, Integer> possibleCombos = new HashMap<>();
+    public Map<Integer, Integer> currentFaceValues = new HashMap<>();
     public int totalScore = 0;
 
     public ScoreCard(){
@@ -25,24 +23,24 @@ public class ScoreCard {
     public void showScorecard(){
         System.out.println("- Your ScoreCard -");
 
-        for(String combo : scorecard.keySet()){ // TODO: not printing in order?
+        for(String combo : COMBOS){
             if(combo.equals("ONES"))
                 System.out.println("Upper Section");
             else if(combo.equals("THREE_OF_A_KIND"))
                 System.out.println("Lower Section");
-            System.out.printf("%s: %s\n", combo, scorecard.get(combo) == -1 ? "---" : scorecard.get(combo));
+            System.out.printf("%s: %s\n", combo, /*scorecard.get(combo) == -1 ? "---" :*/ scorecard.get(combo));
         }
     }
 
     public void checkCombos(int[] dice){
         possibleCombos.clear();
+        currentFaceValues.clear();
 
-        Map<Integer, Integer> faceValues = new HashMap<>();
         for(int die : dice){
-            if(!faceValues.containsKey(die))
-                faceValues.put(die, 1);
+            if(!currentFaceValues.containsKey(die))
+                currentFaceValues.put(die, 1);
             else
-                faceValues.put(die, faceValues.get(die) + 1);
+                currentFaceValues.put(die, currentFaceValues.get(die) + 1);
         }
 
         Arrays.sort(dice);
@@ -50,48 +48,48 @@ public class ScoreCard {
             if(scorecard.get(combo) == -1){
                 switch(combo){
                     case "ONES":
-                        if(faceValues.containsKey(1))
-                            possibleCombos.put(combo, 0);
+                        if(currentFaceValues.containsKey(1))
+                            possibleCombos.put(combo, getPoints(combo));
                         break;
 
                     case "TWOS":
-                        if(faceValues.containsKey(2))
-                            possibleCombos.put(combo, 0);
+                        if(currentFaceValues.containsKey(2))
+                            possibleCombos.put(combo, getPoints(combo));
                         break;
 
                     case "THREES":
-                        if(faceValues.containsKey(3))
-                            possibleCombos.put(combo, 0);
+                        if(currentFaceValues.containsKey(3))
+                            possibleCombos.put(combo, getPoints(combo));
                         break;
 
                     case "FOURS":
-                        if(faceValues.containsKey(4))
-                            possibleCombos.put(combo, 0);
+                        if(currentFaceValues.containsKey(4))
+                            possibleCombos.put(combo, getPoints(combo));
                         break;
 
                     case "FIVES":
-                        if(faceValues.containsKey(5))
-                            possibleCombos.put(combo, 0);
+                        if(currentFaceValues.containsKey(5))
+                            possibleCombos.put(combo, getPoints(combo));
                         break;
 
                     case "SIXES":
-                        if(faceValues.containsKey(6))
-                            possibleCombos.put(combo, 0);
+                        if(currentFaceValues.containsKey(6))
+                            possibleCombos.put(combo, getPoints(combo));
                         break;
 
                     case "THREE_OF_A_KIND":
-                        for(int amount : faceValues.values()){
+                        for(int amount : currentFaceValues.values()){
                             if(amount >= 3){
-                                possibleCombos.put(combo, 0);
+                                possibleCombos.put(combo, getPoints(combo));
                                 break;
                             }
                         }
                         break;
 
                     case "FOUR_OF_A_KIND":
-                        for(int amount : faceValues.values()){
+                        for(int amount : currentFaceValues.values()){
                             if(amount >= 4){
-                                possibleCombos.put(combo, 0);
+                                possibleCombos.put(combo, getPoints(combo));
                                 break;
                             }
                         }
@@ -100,14 +98,14 @@ public class ScoreCard {
                     case "FULL_HOUSE":
                         boolean hasPair = false;
                         boolean hasTriple = false;
-                        for(int amount : faceValues.values()){
+                        for(int amount : currentFaceValues.values()){
                             if(amount == 2)
                                 hasPair = true;
                             if(amount == 3){
                                 hasTriple = true;
                             }
                             if(hasPair && hasTriple){
-                                possibleCombos.put(combo, 0);
+                                possibleCombos.put(combo, getPoints(combo));
                                 break;
                             }
                         }
@@ -119,7 +117,7 @@ public class ScoreCard {
 
                         for(int[] small_straight : SMALL_STRAIGHTS){
                             if(Arrays.equals(small_straight, diceShort)){
-                                possibleCombos.put(combo, 0);
+                                possibleCombos.put(combo, getPoints(combo));
                                 break;
                             }
                         }
@@ -128,19 +126,19 @@ public class ScoreCard {
                     case "LARGE_STRAIGHT":
                         for(int[] large_straight : LARGE_STRAIGHTS){
                             if(Arrays.equals(large_straight, dice)) {
-                                possibleCombos.put(combo, 0);
+                                possibleCombos.put(combo, getPoints(combo));
                                 break;
                             }
                         }
                         break;
 
                     case "CHANCE":
-                        possibleCombos.put(combo, 0);
+                        possibleCombos.put(combo, getPoints(combo));
                         break;
 
                     case "YAHTZEE":
-                        if(faceValues.size() == 1)
-                            possibleCombos.put(combo, 0);
+                        if(currentFaceValues.size() == 1)
+                            possibleCombos.put(combo, getPoints(combo));
                         break;
 
                     default:
@@ -178,64 +176,92 @@ public class ScoreCard {
     }
 
     public void showPossibleCombos(){
-        System.out.println("- Possible Combos -");
+        System.out.println("\n- Possible Combos -");
 
         int count = 1;
-        for(String combo : possibleCombos.keySet()){
-            System.out.printf("%d. %s\n", count, combo);
-            count++;
+        for(String combo : COMBOS){
+            if(possibleCombos.containsKey(combo)){
+                if(possibleCombos.get(combo) == 1)
+                    System.out.printf("%d. %s (%d point)\n", count, combo, possibleCombos.get(combo));
+                else
+                    System.out.printf("%d. %s (%d points)\n", count, combo, possibleCombos.get(combo));
+                count++;
+            }
         }
     }
 
     public void getPlayerChoice(){
+        int choice;
 
+        do{
+            System.out.printf("Which score would you like to use? (1-%d)\n", possibleCombos.size());
+            String input = scan.nextLine().trim();
+
+            try{
+                choice = Integer.parseInt(input);
+                break;
+            }
+            catch(NumberFormatException e){
+                System.out.printf("\"%s\" is not a valid choice. Please try again.\n\n", input);
+            }
+        }while(true);
+
+        int count = 0;
+        for(String combo : COMBOS){
+            if(possibleCombos.containsKey(combo))
+                count++;
+            if(count == choice)
+                scorecard.put(combo, possibleCombos.get(combo));
+        }
     }
 
     public int getPoints(String key){
         int points = 0;
 
-//        for(String combo : possibleCombos.keySet()){
-//            switch(combo){
-//                case "ONES":
-//                    points += possibleCombos.put(combo, points);
-//                    break;
-//                case "TWOS":
-//                    break;
-//                case "THREES":
-//                    break;
-//                case "FOURS":
-//                    break;
-//                case "FIVES":
-//                    break;
-//                case "SIXES":
-//                    break;
-//                case "THREE_OF_A_KIND":
-//                    break;
-//                case "FOUR_OF_A_KIND":
-//                    break;
-//                case "FULL_HOUSE":
-//                    break;
-//                case "SMALL_STRAIGHT":
-//                    break;
-//                case "LARGE_STRAIGH":
-//                    break;
-//                case "CHANCE":
-//                    break;
-//                case "YAHTZEE":
-//                    break;
-//                default:
-//            }
-//        }
+        switch(key){
+            case "ONES":
+                points = currentFaceValues.get(1);
+                break;
+            case "TWOS":
+                points = currentFaceValues.get(2) * 2;
+                break;
+            case "THREES":
+                points = currentFaceValues.get(3) * 3;
+                break;
+            case "FOURS":
+                points = currentFaceValues.get(4) * 4;
+                break;
+            case "FIVES":
+                points = currentFaceValues.get(5) * 5;
+                break;
+            case "SIXES":
+                points = currentFaceValues.get(6) * 6;
+                break;
+            case "THREE_OF_A_KIND":
+            case "FOUR_OF_A_KIND":
+            case "CHANCE":
+                for(int value : currentFaceValues.keySet())
+                    points += value * currentFaceValues.get(value);
+                break;
+            case "FULL_HOUSE":
+                points = 25;
+                break;
+            case "SMALL_STRAIGHT":
+                points = 30;
+                break;
+            case "LARGE_STRAIGHT":
+                points = 40;
+                break;
+            case "YAHTZEE":
+                points = 50;
+                break;
+            default:
+        }
 
         return points;
     }
 
     public void calculateTotalScore(){
-        for(String combo : scorecard.keySet()){
-            if(combo.equals("THREE_OF_A_KIND") && totalScore >= 63)
-                totalScore += 35;
 
-            totalScore += scorecard.get(combo);
-        }
     }
 }
