@@ -115,11 +115,15 @@ public class ScoreCard {
                         // TODO: won't properly check for small straight if there are duplicates
                         // of any of the first 3 values;
                         // maybe use nested for loops and check each value individually
-                        int[] diceShort = new int[4];
-                        System.arraycopy(dice, 0, diceShort, 0, diceShort.length);
-
                         for(int[] small_straight : SMALL_STRAIGHTS){
-                            if(Arrays.equals(small_straight, diceShort)){
+                            int count = 0;
+
+                            for(int value : small_straight){
+                                if(Arrays.binarySearch(dice, value) >= 0)
+                                    count++;
+                            }
+
+                            if(count >= 4){
                                 possibleCombos.put(combo, getPoints(combo));
                                 break;
                             }
