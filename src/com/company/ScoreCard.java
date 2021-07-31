@@ -16,7 +16,7 @@ public class ScoreCard {
 
     public ScoreCard(){
         for(String combo : COMBOS){
-            scorecard.put(combo, null);
+            scorecard.put(combo, -1);
         }
     }
 
@@ -28,7 +28,7 @@ public class ScoreCard {
                 System.out.println("Upper Section");
             else if(combo.equals("THREE_OF_A_KIND"))
                 System.out.println("Lower Section");
-            System.out.printf("%s: %s\n", combo, scorecard.get(combo) == null ? "---" : scorecard.get(combo));
+            System.out.printf("%s: %s\n", combo, scorecard.get(combo) == -1 ? "---" : scorecard.get(combo));
         }
     }
 
@@ -45,7 +45,7 @@ public class ScoreCard {
 
         Arrays.sort(dice);
         for(String combo : COMBOS){
-            if(scorecard.get(combo) == null){
+            if(scorecard.get(combo) == -1){
                 switch(combo){
                     case "ONES":
                         if(currentFaceValues.containsKey(1))
@@ -112,9 +112,6 @@ public class ScoreCard {
                         break;
 
                     case "SMALL_STRAIGHT":
-                        // TODO: won't properly check for small straight if there are duplicates
-                        // of any of the first 3 values;
-                        // maybe use nested for loops and check each value individually
                         for(int[] small_straight : SMALL_STRAIGHTS){
                             int count = 0;
 
@@ -147,18 +144,15 @@ public class ScoreCard {
                         if(currentFaceValues.size() == 1)
                             possibleCombos.put(combo, getPoints(combo));
                         break;
-
-                    default:
-
                 }
             }
         }
 
         if(possibleCombos.isEmpty()){
-            System.out.println("There are no valid combos on your scorecard for this roll.\n" +
+            System.out.println("\nThere are no valid combos on your scorecard for this roll.\n" +
                     "You must choose a score to fill with a 0:");
             for(String combo : COMBOS){
-                if(scorecard.get(combo) == null)
+                if(scorecard.get(combo) == -1)
                     possibleCombos.put(combo, 0);
             }
         }
@@ -197,10 +191,22 @@ public class ScoreCard {
 
         int count = 0;
         for(String combo : COMBOS){
-            if(possibleCombos.containsKey(combo))
-                count++;
-            if(count == choice)
-                scorecard.put(combo, possibleCombos.get(combo));
+            /* to maintain the order from String[] COMBOS, and add points to the option the player picked:
+             * - first check if that combo was already used, don't bother checking if it has points
+             * - checks if that combo is in possibleCombos
+             * - if it is, add 1 to count, which should now correlate to where it was when the player saw it
+             * - check if count and choice are equal; was that what the player chose?
+             * - if so, add the points from possibleCombos to the player's scorecard, exit from loop
+             * - if not, move to next combo
+             */
+            if(possibleCombos.get(combo) != -1){
+                if(possibleCombos.containsKey(combo))
+                    count++;
+                if(count == choice){
+                    scorecard.put(combo, possibleCombos.get(combo));
+                    break;
+                }
+            }
         }
     }
 
