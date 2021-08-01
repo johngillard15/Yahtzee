@@ -43,7 +43,6 @@ public class ScoreCard {
                 currentFaceValues.put(die, currentFaceValues.get(die) + 1);
         }
 
-        Arrays.sort(dice);
         for(String combo : COMBOS){
             if(scorecard.get(combo) == -1){
                 switch(combo){
