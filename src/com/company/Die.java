@@ -1,6 +1,6 @@
 package com.company;
 
-public class Die {
+public class Die implements Comparable<Die>{
     public int numberOfSides;
     public int faceValue;
 
@@ -30,5 +30,10 @@ public class Die {
 
     public void setFaceValue(int faceValue){
         this.faceValue = faceValue;
+    }
+
+    @Override
+    public int compareTo(Die die) {
+        return this.faceValue - die.faceValue;
     }
 }

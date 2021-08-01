@@ -119,13 +119,13 @@ public class Yahtzee {
 
         activePlayer.cup.roll();
         System.out.println("\n- Initial roll -");
-        //System.out.println(activePlayer.cup.displayCup());
+        activePlayer.cup.sort();
         showPlayerDice(activePlayer);
 
         for(int i = 0; i < 2; i++){
             System.out.printf("- Re-roll %d\n", i + 1);
             getSelections(activePlayer);
-            //System.out.printf("result: %s\n", activePlayer.cup.displayCup());
+            activePlayer.cup.sort();
             showPlayerDice(activePlayer);
         }
 
