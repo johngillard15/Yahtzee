@@ -33,7 +33,7 @@ public class Die implements Comparable<Die>{
     }
 
     @Override
-    public int compareTo(Die die) {
+    public int compareTo(Die die){
         return this.faceValue - die.faceValue;
     }
 }

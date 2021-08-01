@@ -1,5 +1,6 @@
 package com.LiarsDice;
 
+import com.Utilities.CLI;
 import com.company.DieGUI;
 import com.company.Player;
 
@@ -96,7 +97,7 @@ public class LiarsDice {
     }
 
     private void round(){
-        cls();
+        CLI.cls();
         System.out.printf("\n-- ROUND %d --", currentRound);
 
         for(Player player : players){
@@ -110,9 +111,9 @@ public class LiarsDice {
                 currentPlayer = 0;
 
             if(currentTurn != 1)
-                cls();
-            System.out.printf("\n- %s turn, press enter to continue... -\n", players.get(currentPlayer).name + "'s");
-            scan.nextLine();
+                CLI.cls();
+            System.out.printf("\n- %s's turn -\n", players.get(currentPlayer).name);
+            CLI.pause();
 
             turn(players.get(currentPlayer));
 
@@ -147,8 +148,8 @@ public class LiarsDice {
         currentTurn = 1;
         currentRound++;
 
-        System.out.print("\n- End of round, press enter to continue... -\n");
-        scan.nextLine();
+        System.out.print("\n- End of round -\n");
+        CLI.pause();
     }
 
     private void turn(Player activePlayer){
@@ -196,7 +197,7 @@ public class LiarsDice {
     }
 
     private void bid(Player activePlayer){
-        int value = 0, amount = 0;
+        int value, amount;
         boolean validBid;
         do{
             // Handles any issues entering a non-number so the program doesn't crash
@@ -305,16 +306,6 @@ public class LiarsDice {
 
     private void showPlayerDice(Player player){
         dieGUI.showDice(player.cup.parseCup());
-    }
-
-    private void cls(){
-        StringBuilder blankLines = new StringBuilder();
-        int lines = 40;
-
-        for(int i = 0; i < lines; i++)
-            blankLines.append("\n");
-
-        System.out.print(blankLines);
     }
 
     private void displayResults(){

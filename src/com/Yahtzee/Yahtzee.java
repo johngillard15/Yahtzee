@@ -1,5 +1,6 @@
 package com.Yahtzee;
 
+import com.Utilities.CLI;
 import com.company.DieGUI;
 import com.company.Player;
 
@@ -109,7 +110,7 @@ public class Yahtzee {
     private void round(){
         for(Player activePlayer : players){
             System.out.printf("\n- %s's turn -\n", activePlayer.name);
-            pause();
+            CLI.pause();
             turn(activePlayer);
         }
     }
@@ -163,11 +164,6 @@ public class Yahtzee {
 
     private void showPlayerDice(Player player){
         dieGUI.showDice(player.cup.parseCup());
-    }
-
-    private void pause(){
-        System.out.println("Press enter to continue...\n");
-        scan.nextLine();
     }
 
     private void displayResults(){
