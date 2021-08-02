@@ -10,7 +10,12 @@ public class Cup {
 
     public Cup(){
         while(dice.size() < MAX_DIE)
-            dice.add(Die.createDie());
+            addDie();
+    }
+
+    public Cup(int diceAmount){
+        while(dice.size() < diceAmount)
+            addDie();
     }
 
     public void addDie(){
