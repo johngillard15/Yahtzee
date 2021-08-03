@@ -23,7 +23,7 @@ public class ScoreCard {
     public void showScorecard(){
         System.out.println("- Your ScoreCard -");
 
-        for(String combo : COMBOS){ // TODO: for some reason scores keep getting reset to null
+        for(String combo : COMBOS){
             if(combo.equals("ONES"))
                 System.out.println("Upper Section");
             else if(combo.equals("THREE_OF_A_KIND"))
