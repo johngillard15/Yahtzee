@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @since 24/7/2021
  * @author John Gillard
- * @version 28/7/2021
+ * @version 5/8/2021
  */
 
 /*
@@ -93,18 +93,21 @@ public class LiarsDice {
         displayResults();
     }
 
+    private void rollAll(){
+        for(Player player : players){
+            player.cup.roll();
+        }
+    }
+
     private void round(){
         CLI.cls();
         System.out.printf("\n-- ROUND %d --", currentRound);
 
-        for(Player player : players){
-            player.cup.roll();
-        }
+        rollAll();
 
-
-        while(!challenge){
-            // rollover if end of players list reached
-            if(currentPlayer == players.size())
+        do{
+            // rollover if end of players list reached to fix IndexOutOfBounds
+            if(currentPlayer >= players.size())
                 currentPlayer = 0;
 
             if(currentTurn != 1)
@@ -124,11 +127,9 @@ public class LiarsDice {
 
                 accuse(players.get(currentPlayer), players.get(lastPlayer));
             }
-            else if(currentPlayer >= players.size() - 1){ // rollover to fix IndexOutOfBounds
-                currentPlayer = -1;
-            }
+
             currentPlayer++;
-        }
+        }while(!challenge);
 
         endRound();
     }
@@ -213,7 +214,7 @@ public class LiarsDice {
                     amount = Integer.parseInt(input);
                     break;
                 }
-                catch (NumberFormatException e){
+                catch(NumberFormatException e){
                     System.out.printf("\"%s\" is not a valid bid %s. Please try again.\n\n", input, problemVar);
                 }
             }while(true);
@@ -226,20 +227,18 @@ public class LiarsDice {
                    System.out.printf("%d dice, higher than a [%d]\n", lastBid[1], lastBid[0]);
                    System.out.println("OR");
                }
-               System.out.printf("%d or more dice of any value.\n", lastBid[1] + 1);
+               System.out.printf("%d or more dice of any value.\n\n", lastBid[1] + 1);
            }
         }while(!validBid);
 
         // TODO: now get the probability of each bid
         currentBid[0] = value;
         currentBid[1] = amount;
-        //System.out.printf("\n%s has bid %d [%d]'s.\n", activePlayer.name, currentBid[1], currentBid[0]);
     }
 
     private void accuse(Player accuser, Player accused){
         System.out.printf("\n%s has been called out by %s! But who's lying?\n", accused.name, accuser.name);
-        System.out.print(" (press enter to continue...) \n");
-        scan.nextLine();
+        CLI.pause();
 
         updateTable();
         showTable();
@@ -259,6 +258,8 @@ public class LiarsDice {
     }
 
     private void punishment(Player damnDirtyLiar){
+        currentPlayer = players.indexOf(damnDirtyLiar) - 1;
+
         damnDirtyLiar.cup.removeDie();
         int diceLeft = damnDirtyLiar.cup.dice.size();
 
@@ -271,7 +272,6 @@ public class LiarsDice {
             System.out.printf("\n%s still has %d dice left, good luck...\n", damnDirtyLiar.name, diceLeft);
             if(diceLeft == 1)
                 System.out.println("... you'll need it...");
-            currentPlayer = players.indexOf(damnDirtyLiar);
         }
     }
 

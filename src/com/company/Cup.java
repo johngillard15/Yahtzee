@@ -39,15 +39,15 @@ public class Cup {
             die.roll();
     }
 
-    public void roll(int selection){
-        dice.get(selection).roll();
-    }
-
-    public void roll(List<Integer> selections){
+    public void roll(int... selections){
         for(int selection : selections)
             roll(selection);
     }
-    public void roll(int... selections){
+//    public void roll(int selection){
+//        dice.get(selection).roll();
+//    }
+
+    public void roll(List<Integer> selections){
         for(int selection : selections)
             roll(selection);
     }
