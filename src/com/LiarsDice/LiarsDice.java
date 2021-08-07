@@ -100,35 +100,30 @@ public class LiarsDice {
     }
 
     private void round(){
+        int lastPlayer;
+
         CLI.cls();
         System.out.printf("\n-- ROUND %d --", currentRound);
 
         rollAll();
 
         do{
-            // rollover if end of players list reached to fix IndexOutOfBounds
-            if(currentPlayer >= players.size())
-                currentPlayer = 0;
-
             if(currentTurn != 1)
                 CLI.cls();
+
             System.out.printf("\n- %s's turn -\n", players.get(currentPlayer).name);
             CLI.pause();
 
             turn(players.get(currentPlayer));
-
             if(challenge){
-                int lastPlayer;
-
-                if(currentPlayer == 0)
-                    lastPlayer = players.size() - 1;
-                else
-                    lastPlayer = currentPlayer - 1;
-
+                lastPlayer = currentPlayer == 0 ? players.size() - 1 : currentPlayer - 1;
                 accuse(players.get(currentPlayer), players.get(lastPlayer));
             }
 
-            currentPlayer++;
+            if(currentPlayer == players.size() - 1)
+                currentPlayer = 0;
+            else
+                currentPlayer++;
         }while(!challenge);
 
         endRound();
@@ -247,19 +242,24 @@ public class LiarsDice {
         if(tableDice.get(currentBid[0]) >= currentBid[1]){
             System.out.printf("...and there are %d [%d]'s!\n", tableDice.get(currentBid[0]), currentBid[0]);
             System.out.printf("\n%s is innocent! For shame, %s.\n", accused.name, accuser.name);
+
+            if(accuser.cup.dice.size() == 1)
+                currentPlayer = players.indexOf(accused) - 1;
+            else
+                currentPlayer--;
             punishment(accuser);
         }
         else{
             System.out.printf("...but there were only %d %d's...\n", tableDice.get(currentBid[0]), currentBid[0]);
             System.out.printf("\nLooks like %s was being shifty after all... I never trusted'em either.\n",
                     accused.name);
+
+            currentPlayer = players.indexOf(accused) - 1;
             punishment(accused);
         }
     }
 
     private void punishment(Player damnDirtyLiar){
-        currentPlayer = players.indexOf(damnDirtyLiar) - 1;
-
         damnDirtyLiar.cup.removeDie();
         int diceLeft = damnDirtyLiar.cup.dice.size();
 
