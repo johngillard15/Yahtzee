@@ -62,15 +62,17 @@ public class LiarsDice {
 
     private List<Player> players = new ArrayList<>();
     private Map<Integer, Integer> tableDice = new HashMap<>();
-    private int[] lastBid = new int[2]; // value, amount
-    private int[] currentBid = new int[2];
+    private int[] currentBid = new int[2]; // value, amount
     private int currentPlayer = 0;
     private int currentRound = 1;
     private int currentTurn = 1;
     private boolean challenge = false;
 
-    // TODO use getTotalDiceInPlay somehow
-    // TODO: remember get the probability of each bid
+    // TODO: use getTotalDiceInPlay somehow
+    // TODO: use STARTING_DIE_COUNT somehow
+    // TODO: change Cup class to allow for variable number of dice, then ask for number in LiarsDice constructor
+    // TODO: now get the probability of each bid
+    // TODO: maybe keep track of previous bids to help make future bids
     public LiarsDice(){
         int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
 
@@ -101,8 +103,6 @@ public class LiarsDice {
     }
 
     private void round(){
-        int lastPlayer;
-
         CLI.cls();
         System.out.printf("\n-- ROUND %d --", currentRound);
 
@@ -117,7 +117,7 @@ public class LiarsDice {
 
             turn(players.get(currentPlayer));
             if(challenge){
-                lastPlayer = currentPlayer == 0 ? players.size() - 1 : currentPlayer - 1;
+                int lastPlayer = currentPlayer == 0 ? players.size() - 1 : currentPlayer - 1;
                 accuse(players.get(currentPlayer), players.get(lastPlayer));
             }
 
@@ -136,7 +136,6 @@ public class LiarsDice {
         for(int faceValue = 1; faceValue <= 6; faceValue++)
             tableDice.put(faceValue, 0);
 
-        Arrays.fill(lastBid, 0);
         Arrays.fill(currentBid, 0);
 
         currentTurn = 1;
@@ -147,17 +146,13 @@ public class LiarsDice {
     }
 
     private void turn(Player activePlayer){
-        // TODO: catch any input exceptions
-        lastBid = currentBid.clone();
-
         System.out.print("- Your dice -\n");
         showPlayerDice(activePlayer);
 
         if(currentTurn != 1){
             System.out.println("- Last Bid -");
-            //System.out.printf("%d [%d]'s\n", lastBid[1], lastBid[0]);
-            dieGUI.showDie(lastBid[0]);
-            System.out.printf(" x%d\n", lastBid[1]);
+            dieGUI.showDie(currentBid[0]);
+            System.out.printf(" x%d\n", currentBid[1]);
 
             String choice;
             boolean validChoice;
@@ -165,7 +160,7 @@ public class LiarsDice {
                 System.out.println("Would you like to (b)id or (a)ccuse?");
                 choice = scan.nextLine();
 
-                validChoice = (choice.equalsIgnoreCase("b")) || (choice.equalsIgnoreCase("a"));
+                validChoice = ("b".equalsIgnoreCase(choice)) || ("a".equalsIgnoreCase(choice));
                 if (!validChoice) {
                     System.out.printf("\"%s\" is not a valid option.\n" +
                             "Please choose \"b\" to place a bid and \"a\" to accuse the previous player.\n\n", choice);
@@ -174,7 +169,7 @@ public class LiarsDice {
 
             switch (choice){
                 case "b":
-                    bid(activePlayer);
+                    bid();
                     break;
                 case "a":
                     challenge = true;
@@ -184,13 +179,13 @@ public class LiarsDice {
             }
         }
         else{
-            bid(activePlayer);
+            bid();
         }
 
         currentTurn++;
     }
 
-    private void bid(Player activePlayer){
+    private void bid(){
         int value, amount;
         boolean validBid;
         do{
@@ -215,15 +210,15 @@ public class LiarsDice {
                 }
             }while(true);
 
-           validBid = (amount > lastBid[1]) || (amount == lastBid[1] && value > lastBid[0]);
+           validBid = (amount > currentBid[1]) || (amount == currentBid[1] && value > currentBid[0]);
            if(!validBid){
                System.out.printf("\nA bid of %d [%d]'s is not currently possible.\n", amount, value);
                System.out.println("The next bid must have:");
-               if(lastBid[0] < 6){
-                   System.out.printf("%d dice, higher than a [%d]\n", lastBid[1], lastBid[0]);
+               if(currentBid[0] < 6){
+                   System.out.printf("%d dice, higher than a [%d]\n", currentBid[1], currentBid[0]);
                    System.out.println("OR");
                }
-               System.out.printf("%d or more dice of any value.\n\n", lastBid[1] + 1);
+               System.out.printf("%d or more dice of any value.\n\n", currentBid[1] + 1);
            }
         }while(!validBid);
 
