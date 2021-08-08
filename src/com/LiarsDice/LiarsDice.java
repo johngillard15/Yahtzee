@@ -70,6 +70,7 @@ public class LiarsDice {
     private boolean challenge = false;
 
     // TODO use getTotalDiceInPlay somehow
+    // TODO: remember get the probability of each bid
     public LiarsDice(){
         int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
 
@@ -226,7 +227,6 @@ public class LiarsDice {
            }
         }while(!validBid);
 
-        // TODO: now get the probability of each bid
         currentBid[0] = value;
         currentBid[1] = amount;
     }
