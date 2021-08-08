@@ -56,7 +56,6 @@ import java.util.*;
 public class LiarsDice {
     private static final Scanner scan = new Scanner(System.in);
     private static final DieGUI dieGUI = new DieGUI();
-    private static final int STARTING_DIE_COUNT = 5;
     private static final int MIN_PLAYERS = 2;
     private static final int MAX_PLAYERS = 5;
 
@@ -69,18 +68,20 @@ public class LiarsDice {
     private boolean challenge = false;
 
     // TODO: use getTotalDiceInPlay somehow
-    // TODO: use STARTING_DIE_COUNT somehow
-    // TODO: change Cup class to allow for variable number of dice, then ask for number in LiarsDice constructor
     // TODO: now get the probability of each bid
     // TODO: maybe keep track of previous bids to help make future bids
     public LiarsDice(){
+        System.out.println("\nHow many dice will each player start with?");
+        System.out.print("starting dice: ");
+        int startingDice = Integer.parseInt(scan.nextLine());
+
         int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
 
         int currentPlayer = 1;
         do{
             System.out.printf("\nPlayer %d, what is your name? ", currentPlayer);
             String name = scan.nextLine().trim();
-            players.add(Player.addPlayer(name));
+            players.add(Player.addPlayer(name, startingDice));
             System.out.printf("Hello, %s.\n", name);
             currentPlayer++;
         }while(players.size() < numPlayers);

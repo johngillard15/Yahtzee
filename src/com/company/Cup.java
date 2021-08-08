@@ -6,10 +6,10 @@ import java.util.List;
 
 public class Cup {
     public List<Die> dice = new ArrayList<>();
-    private final int MAX_DIE = 5;
+    private final int DEFAULT_MAX_DICE = 5;
 
     public Cup(){
-        while(dice.size() < MAX_DIE)
+        while(dice.size() < DEFAULT_MAX_DICE)
             addDie();
     }
 
