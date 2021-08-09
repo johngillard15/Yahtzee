@@ -73,7 +73,7 @@ public class LiarsDice {
     public LiarsDice(){
         System.out.println("\nHow many dice will each player start with?");
         System.out.print("starting dice: ");
-        int startingDice = Integer.parseInt(scan.nextLine());
+        int startingDice = Integer.parseInt(scan.nextLine()); // TODO: validate number format and valid amounts
 
         int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
 
