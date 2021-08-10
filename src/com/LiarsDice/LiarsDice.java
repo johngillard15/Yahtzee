@@ -58,23 +58,26 @@ public class LiarsDice {
     private static final DieGUI dieGUI = new DieGUI();
     private static final int MIN_PLAYERS = 2;
     private static final int MAX_PLAYERS = 5;
+    
+    private final List<Player> players = new ArrayList<>();
+    private final Map<Integer, Integer> tableDice = new HashMap<>();
+    private final int[] currentBid = new int[2]; // value, amount
 
-    private List<Player> players = new ArrayList<>();
-    private Map<Integer, Integer> tableDice = new HashMap<>();
-    private int totalDiceInPlay;
-    private int[] currentBid = new int[2]; // value, amount
     private int[] lastBid = new int[2];
+    private int totalDiceInPlay;
     private int currentPlayer = 0;
     private int currentRound = 1;
     private int currentTurn = 1;
     private boolean challenge = false;
 
+    // TODO: ask Cliff about his thoughts on final lists/arrays
+    // TODO: validate number format and valid amounts for startingDice (maybe also for numPlayers?)
     // TODO: now get the probability of each bid
     // TODO: maybe keep track of previous bids to help make future bids
     public LiarsDice(){
         System.out.println("\nHow many dice will each player start with?");
         System.out.print("starting dice: ");
-        int startingDice = Integer.parseInt(scan.nextLine()); // TODO: validate number format and valid amounts
+        int startingDice = Integer.parseInt(scan.nextLine());
 
         int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
 
@@ -140,8 +143,6 @@ public class LiarsDice {
     private void endRound(){
         challenge = false;
 
-//        for(int faceValue : tableDice.keySet())
-//            tableDice.put(faceValue, 0);
         tableDice.replaceAll((key, value) -> 0);
 
         Arrays.fill(currentBid, 0);

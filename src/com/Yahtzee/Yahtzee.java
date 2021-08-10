@@ -43,7 +43,7 @@ import java.util.Scanner;
  * turn
  * 1. initial dice roll
  * 2. ask player if they want to re-roll some or all dice (up to 2 times)
- * 3. determine what scores are possible based on current roll and the players scorecard
+ * 3. determine what scores are possible based on current roll and the player's scorecard
  * 4. ask player which score they would like to contribute to
  * 5. send player over to calculateScore method along with score selection
  *
@@ -67,7 +67,7 @@ import java.util.Scanner;
  * 7. chance is just the sum of the current roll
  * yahtzee
  * 8. yahtzee is five-of-a-kind, and awards 50 points
- * 9. subsequent Yahtzees (jokers) are awarded 100 points instead of 50;
+ * 9. subsequent Yahtzee's (jokers) are awarded 100 points instead of 50;
  *  - if the corresponding upper score is not filled, use the roll to fill that score in addition to the joker bonus
  *  - if any lower score has not been filled, mark it as so along with the joker bonus
  *
@@ -76,12 +76,11 @@ import java.util.Scanner;
 // TODO: now try to sort dice list to help player see combos
 
 public class Yahtzee {
-    private final Scanner scan = new Scanner(System.in);
+    private static final Scanner scan = new Scanner(System.in);
     private static final DieGUI dieGUI = new DieGUI();
-    private final int MIN_PLAYERS = 1;
-    private final int MAX_PLAYERS = 5;
-
-    private List<Player> players = new ArrayList<>();
+    private static final int MIN_PLAYERS = 1;
+    private static final int MAX_PLAYERS = 5;
+    private final List<Player> players = new ArrayList<>();
 
     public Yahtzee(){
         int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
