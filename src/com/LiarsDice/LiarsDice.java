@@ -63,6 +63,7 @@ public class LiarsDice {
     private Map<Integer, Integer> tableDice = new HashMap<>();
     private int totalDiceInPlay;
     private int[] currentBid = new int[2]; // value, amount
+    private int[] lastBid = new int[2];
     private int currentPlayer = 0;
     private int currentRound = 1;
     private int currentTurn = 1;
@@ -142,6 +143,7 @@ public class LiarsDice {
         tableDice.replaceAll((key, value) -> 0);
 
         Arrays.fill(currentBid, 0);
+        Arrays.fill(lastBid, 0);
 
         currentTurn = 1;
         currentRound++;
@@ -192,55 +194,52 @@ public class LiarsDice {
                 System.out.printf("\"%s\" is not a valid option.\n" +
                         "Please choose \"b\" to place a bid and \"a\" to accuse the previous player.\n\n", choice);
             }
-        }while (!validChoice);
+        }while(!validChoice);
 
         return choice;
     }
 
     private void bid(){
-        int value, amount;
-        boolean validBid;
-        do{
-            // Handles any issues entering a non-number so the program doesn't crash
-            do{
-                String problemVar = "";
-                String input = "";
-                try{
-                    System.out.println("- Your bid -");
-                    System.out.print("Value: ");
-                    problemVar = "value";
-                    input = scan.nextLine();
-                    value = Integer.parseInt(input);
-                    System.out.print("Amount: ");
-                    problemVar = "amount";
-                    input = scan.nextLine();
-                    amount = Integer.parseInt(input);
-                    break;
-                }
-                catch(NumberFormatException e){
-                    System.out.printf("\"%s\" is not a valid bid %s. Please try again.\n\n", input, problemVar);
-                }
-            }while(true);
+        lastBid = currentBid.clone();
 
-           validBid = validateBid(value, amount);
-        }while(!validBid);
-
-        currentBid[0] = value;
-        currentBid[1] = amount;
+        while(!validateBidFormat() || !validateBid());
     }
 
-    private boolean validateBid(int value, int amount){
-        boolean validBid;
-        validBid = amount > currentBid[1] || (amount == currentBid[1] && value > currentBid[0]);
+    private boolean validateBidFormat(){
+        String problemVar = "";
+        String input = "";
+
+        System.out.println("- Your bid -");
+        try{
+            System.out.print("Value: ");
+            input = scan.nextLine();
+            problemVar = "value";
+            currentBid[0] = Integer.parseInt(input);
+
+            System.out.print("Amount: ");
+            input = scan.nextLine();
+            problemVar = "amount";
+            currentBid[1] = Integer.parseInt(input);
+        }
+        catch(NumberFormatException e){
+            System.out.printf("\"%s\" is not a valid bid %s. Please try again.\n\n", input, problemVar);
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateBid(){
+        boolean validBid = currentBid[1] > lastBid[1] || (currentBid[1] == lastBid[1] && currentBid[0] > lastBid[0]);
 
         if(!validBid){
-            System.out.printf("\nA bid of %d [%d]'s is not currently possible.\n", amount, value);
+            System.out.printf("\nA bid of %d [%d]'s is not currently possible.\n", currentBid[1], currentBid[0]);
             System.out.println("The next bid must have:");
-            if(currentBid[0] < 6){
-                System.out.printf("%d dice, higher than a [%d]\n", currentBid[1], currentBid[0]);
+            if(lastBid[0] < 6){
+                System.out.printf("%d dice, higher than a [%d]\n", lastBid[1], lastBid[0]);
                 System.out.println("OR");
             }
-            System.out.printf("%d or more dice of any value.\n\n", currentBid[1] + 1);
+            System.out.printf("%d or more dice of any value.\n\n", lastBid[1] + 1);
         }
 
         return validBid;
