@@ -122,7 +122,9 @@ public class LiarsDice {
 
             turn(players.get(currentPlayer));
             if(challenge){
-                int lastPlayer = currentPlayer == 0 ? players.size() - 1 : currentPlayer - 1;
+                int lastPlayer = currentPlayer == 0
+                        ? players.size() - 1
+                        : currentPlayer - 1;
                 accuse(players.get(currentPlayer), players.get(lastPlayer));
             }
 
@@ -230,7 +232,8 @@ public class LiarsDice {
     }
 
     private boolean validateBid(){
-        boolean validBid = currentBid[1] > lastBid[1] || (currentBid[1] == lastBid[1] && currentBid[0] > lastBid[0]);
+        boolean validBid = currentBid[1] > lastBid[1]
+                || (currentBid[1] == lastBid[1] && currentBid[0] > lastBid[0]);
 
         if(!validBid){
             System.out.printf("\nA bid of %d [%d]'s is not currently possible.\n", currentBid[1], currentBid[0]);
@@ -252,7 +255,7 @@ public class LiarsDice {
         showTable();
         System.out.printf("%s bid %d [%d]'s...\n", accused.name, currentBid[1], currentBid[0]);
 
-        if(tableDice.get(currentBid[0]) >= currentBid[1]){
+        if(currentBid[1] <= tableDice.get(currentBid[0])){
             System.out.printf("...and there are %d [%d]'s!\n", tableDice.get(currentBid[0]), currentBid[0]);
             System.out.printf("\n%s is innocent! For shame, %s.\n", accused.name, accuser.name);
 
