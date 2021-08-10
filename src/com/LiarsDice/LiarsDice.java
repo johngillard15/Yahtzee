@@ -155,26 +155,16 @@ public class LiarsDice {
         activePlayer.cup.sort();
         dieGUI.showDice(activePlayer.cup.parseCup());
 
-        if(currentTurn != 1){
+        if(currentTurn == 1){
+            bid();
+        }
+        else{
             System.out.println("- Last Bid -");
             dieGUI.showDie(currentBid[0]);
             System.out.printf(" x%d\n", currentBid[1]);
             System.out.printf("There are %d dice on the table.\n\n", totalDiceInPlay);
 
-            String choice; // TODO: put this in a getChoice method
-            boolean validChoice;
-            do{
-                System.out.println("Would you like to (b)id or (a)ccuse?");
-                choice = scan.nextLine();
-
-                validChoice = ("b".equalsIgnoreCase(choice)) || ("a".equalsIgnoreCase(choice));
-                if (!validChoice) {
-                    System.out.printf("\"%s\" is not a valid option.\n" +
-                            "Please choose \"b\" to place a bid and \"a\" to accuse the previous player.\n\n", choice);
-                }
-            }while (!validChoice);
-
-            switch (choice){
+            switch(getTurnChoice()){
                 case "b":
                     bid();
                     break;
@@ -185,11 +175,26 @@ public class LiarsDice {
                     System.out.println("ay bruh how tf");
             }
         }
-        else{
-            bid();
-        }
 
         currentTurn++;
+    }
+
+    private String getTurnChoice(){
+        String choice;
+
+        boolean validChoice;
+        do{
+            System.out.println("Would you like to (b)id or (a)ccuse?");
+            choice = scan.nextLine();
+
+            validChoice = ("b".equalsIgnoreCase(choice)) || ("a".equalsIgnoreCase(choice));
+            if (!validChoice) {
+                System.out.printf("\"%s\" is not a valid option.\n" +
+                        "Please choose \"b\" to place a bid and \"a\" to accuse the previous player.\n\n", choice);
+            }
+        }while (!validChoice);
+
+        return choice;
     }
 
     private void bid(){
