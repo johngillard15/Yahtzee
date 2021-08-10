@@ -222,20 +222,28 @@ public class LiarsDice {
                 }
             }while(true);
 
-           validBid = amount > currentBid[1] || (amount == currentBid[1] && value > currentBid[0]);
-           if(!validBid){
-               System.out.printf("\nA bid of %d [%d]'s is not currently possible.\n", amount, value);
-               System.out.println("The next bid must have:");
-               if(currentBid[0] < 6){
-                   System.out.printf("%d dice, higher than a [%d]\n", currentBid[1], currentBid[0]);
-                   System.out.println("OR");
-               }
-               System.out.printf("%d or more dice of any value.\n\n", currentBid[1] + 1);
-           }
+           validBid = validateBid(value, amount);
         }while(!validBid);
 
         currentBid[0] = value;
         currentBid[1] = amount;
+    }
+
+    private boolean validateBid(int value, int amount){
+        boolean validBid;
+        validBid = amount > currentBid[1] || (amount == currentBid[1] && value > currentBid[0]);
+
+        if(!validBid){
+            System.out.printf("\nA bid of %d [%d]'s is not currently possible.\n", amount, value);
+            System.out.println("The next bid must have:");
+            if(currentBid[0] < 6){
+                System.out.printf("%d dice, higher than a [%d]\n", currentBid[1], currentBid[0]);
+                System.out.println("OR");
+            }
+            System.out.printf("%d or more dice of any value.\n\n", currentBid[1] + 1);
+        }
+
+        return validBid;
     }
 
     private void accuse(Player accuser, Player accused){
