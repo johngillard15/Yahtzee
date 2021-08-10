@@ -61,13 +61,13 @@ public class LiarsDice {
 
     private List<Player> players = new ArrayList<>();
     private Map<Integer, Integer> tableDice = new HashMap<>();
+    private int totalDiceInPlay;
     private int[] currentBid = new int[2]; // value, amount
     private int currentPlayer = 0;
     private int currentRound = 1;
     private int currentTurn = 1;
     private boolean challenge = false;
 
-    // TODO: use getTotalDiceInPlay somehow
     // TODO: now get the probability of each bid
     // TODO: maybe keep track of previous bids to help make future bids
     public LiarsDice(){
@@ -88,6 +88,8 @@ public class LiarsDice {
 
         for(int faceValue = 1; faceValue <= 6; faceValue++)
             tableDice.put(faceValue, 0);
+
+        totalDiceInPlay = numPlayers * startingDice;
     }
 
     public void play(){
@@ -103,11 +105,12 @@ public class LiarsDice {
         }
     }
 
-    private void round(){
+    private void round(){ // TODO: try to use modulo to iterate through players
         CLI.cls();
         System.out.printf("\n-- ROUND %d --", currentRound);
 
         rollAll();
+        updateTable();
 
         do{
             if(currentTurn != 1)
@@ -134,8 +137,9 @@ public class LiarsDice {
     private void endRound(){
         challenge = false;
 
-        for(int faceValue = 1; faceValue <= 6; faceValue++)
-            tableDice.put(faceValue, 0);
+//        for(int faceValue : tableDice.keySet())
+//            tableDice.put(faceValue, 0);
+        tableDice.replaceAll((key, value) -> 0);
 
         Arrays.fill(currentBid, 0);
 
@@ -148,14 +152,16 @@ public class LiarsDice {
 
     private void turn(Player activePlayer){
         System.out.print("- Your dice -\n");
-        showPlayerDice(activePlayer);
+        activePlayer.cup.sort();
+        dieGUI.showDice(activePlayer.cup.parseCup());
 
         if(currentTurn != 1){
             System.out.println("- Last Bid -");
             dieGUI.showDie(currentBid[0]);
             System.out.printf(" x%d\n", currentBid[1]);
+            System.out.printf("There are %d dice on the table.\n\n", totalDiceInPlay);
 
-            String choice;
+            String choice; // TODO: put this in a getChoice method
             boolean validChoice;
             do{
                 System.out.println("Would you like to (b)id or (a)ccuse?");
@@ -211,7 +217,7 @@ public class LiarsDice {
                 }
             }while(true);
 
-           validBid = (amount > currentBid[1]) || (amount == currentBid[1] && value > currentBid[0]);
+           validBid = amount > currentBid[1] || (amount == currentBid[1] && value > currentBid[0]);
            if(!validBid){
                System.out.printf("\nA bid of %d [%d]'s is not currently possible.\n", amount, value);
                System.out.println("The next bid must have:");
@@ -231,7 +237,6 @@ public class LiarsDice {
         System.out.printf("\n%s has been called out by %s! But who's lying?\n", accused.name, accuser.name);
         CLI.pause();
 
-        updateTable();
         showTable();
         System.out.printf("%s bid %d [%d]'s...\n", accused.name, currentBid[1], currentBid[0]);
 
@@ -257,6 +262,7 @@ public class LiarsDice {
 
     private void punishment(Player damnDirtyLiar){
         damnDirtyLiar.cup.removeDie();
+        totalDiceInPlay--;
         int diceLeft = damnDirtyLiar.cup.dice.size();
 
         if(diceLeft < 1){
@@ -285,20 +291,6 @@ public class LiarsDice {
         for(int faceValue : tableDice.keySet()){
             System.out.printf("[%d]'s: %d\n", faceValue, tableDice.get(faceValue));
         }
-    }
-
-    private int getTotalDiceInPlay(){ // TODO change this name if i ever get around to using it
-        int totalDiceInPlay = 0;
-
-        updateTable();
-        for(int amount : tableDice.values())
-            totalDiceInPlay += amount;
-
-        return totalDiceInPlay;
-    }
-
-    private void showPlayerDice(Player player){
-        dieGUI.showDice(player.cup.parseCup());
     }
 
     private void displayResults(){
