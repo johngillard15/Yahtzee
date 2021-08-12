@@ -122,11 +122,8 @@ public class LiarsDice {
             if(currentTurn != 1)
                 CLI.cls();
 
-            System.out.printf("\n- %s's turn -\n", players.get(currentPlayer).name);
-            CLI.pause();
-
             turn(players.get(currentPlayer));
-            
+
             if(challenge){
                 int lastPlayer = currentPlayer == 0
                         ? players.size() - 1
@@ -161,6 +158,9 @@ public class LiarsDice {
     }
 
     private void turn(Player activePlayer){
+        System.out.printf("\n- %s's turn -\n", activePlayer.name);
+        CLI.pause();
+
         System.out.print("- Your dice -\n");
         activePlayer.cup.sort();
         dieGUI.showDice(activePlayer.cup.parseCup());
