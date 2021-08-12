@@ -58,22 +58,24 @@ public class LiarsDice {
     private static final DieGUI dieGUI = new DieGUI();
     private static final int MIN_PLAYERS = 2;
     private static final int MAX_PLAYERS = 5;
-    
+
     private final List<Player> players = new ArrayList<>();
     private final Map<Integer, Integer> tableDice = new HashMap<>();
     private final int[] currentBid = new int[2]; // value, amount
 
     private int[] lastBid = new int[2];
     private int totalDiceInPlay;
-    private int currentPlayer = 0;
     private int currentRound = 1;
+    private int currentPlayer = 0;
     private int currentTurn = 1;
     private boolean challenge = false;
 
-    // TODO: ask Cliff about his thoughts on final lists/arrays
+    // TODO: ask Cliff about his thoughts on final lists/arrays and modulus loop control variable
     // TODO: validate number format and valid amounts for startingDice (maybe also for numPlayers?)
+
     // TODO: now get the probability of each bid
     // TODO: maybe keep track of previous bids to help make future bids
+
     public LiarsDice(){
         System.out.println("\nHow many dice will each player start with?");
         System.out.print("starting dice: ");
@@ -109,7 +111,7 @@ public class LiarsDice {
         }
     }
 
-    private void round(){ // TODO: try to use modulo to iterate through players
+    private void round(){ // TODO: try to use modulus to iterate through players
         CLI.cls();
         System.out.printf("\n-- ROUND %d --", currentRound);
 
