@@ -236,16 +236,18 @@ public class LiarsDice {
 
     private boolean validateBid(){
         boolean validBid = (currentBid[0] >= 1 && currentBid[0] <= 6)
+                && currentBid[1] >= 1
                 && (currentBid[1] > lastBid[1] || (currentBid[1] == lastBid[1] && currentBid[0] > lastBid[0]));
 
         if(!validBid){
             System.out.printf("\nA bid of %d [%d]'s is not currently possible.\n", currentBid[1], currentBid[0]);
             System.out.println("The next bid must have:");
-            if(currentBid[0] <= 1 || currentBid[0] >= 6){
-                System.out.print("An actual face value... \n" +
+            if(currentBid[0] < 1 || currentBid[0] > 6 || currentBid[1] <= 0) {
+                System.out.print("A real bid...\n" +
                         "which is ");
             }
-            else if(lastBid[0] < 6){
+
+            if(lastBid[0] != 0 && lastBid[0] < 6){
                 System.out.printf("%d dice, higher than a [%d]\n", lastBid[1], lastBid[0]);
                 System.out.println("OR");
             }
