@@ -126,17 +126,20 @@ public class LiarsDice {
             CLI.pause();
 
             turn(players.get(currentPlayer));
+            
             if(challenge){
                 int lastPlayer = currentPlayer == 0
                         ? players.size() - 1
                         : currentPlayer - 1;
                 accuse(players.get(currentPlayer), players.get(lastPlayer));
             }
+            else{
+                if(currentPlayer == players.size() - 1)
+                    currentPlayer = 0;
+                else
+                    currentPlayer++;
+            }
 
-            if(currentPlayer == players.size() - 1)
-                currentPlayer = 0;
-            else
-                currentPlayer++;
         }while(!challenge);
 
         endRound();
@@ -268,10 +271,6 @@ public class LiarsDice {
             System.out.printf("...and there are %d [%d]'s!\n", tableDice.get(currentBid[0]), currentBid[0]);
             System.out.printf("\n%s is innocent! For shame, %s.\n", accused.name, accuser.name);
 
-            if(accuser.cup.dice.size() == 1)
-                currentPlayer = players.indexOf(accused) - 1;
-            else
-                currentPlayer--;
             punishment(accuser);
         }
         else{
@@ -279,7 +278,7 @@ public class LiarsDice {
             System.out.printf("\nLooks like %s was being shifty after all... I never trusted'em either.\n",
                     accused.name);
 
-            currentPlayer = players.indexOf(accused) - 1;
+            currentPlayer = players.indexOf(accused);
             punishment(accused);
         }
     }
