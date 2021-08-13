@@ -32,8 +32,8 @@ public abstract class Game {
         return getPlayerCount(1, -1);
     }
 
-    protected static int getPlayerCount(final int MAX){
-        return getPlayerCount(1, MAX);
+    protected static int getPlayerCount(final int MIN){
+        return getPlayerCount(MIN, -1);
     }
 
     protected static int getPlayerCount(final int MIN, final int MAX){
@@ -52,11 +52,16 @@ public abstract class Game {
 
             numPlayers = Integer.parseInt(input);
 
-            validNumber = numPlayers >= MIN && numPlayers <= MAX;
+            if(MAX == -1)
+                validNumber = numPlayers >= MIN;
+            else
+                validNumber = numPlayers >= MIN && numPlayers <= MAX;
+
             if(!validNumber){
                 System.out.printf("You cannot have %d player%s.\n", numPlayers, numPlayers != 1 ? "s" : "");
                 if(MAX == -1)
-                    System.out.println("You need to have at least 1 player. Please try again with a valid number.");
+                    System.out.printf("You need to have at least %d player%s. Please try again with a valid number.",
+                            MIN, MIN == 1 ? "" : "s");
                 else
                     System.out.printf("Please pick a number between %d and %d.\n", MIN, MAX);
             }
