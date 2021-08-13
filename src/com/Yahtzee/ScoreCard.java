@@ -3,16 +3,17 @@ package com.Yahtzee;
 import java.util.*;
 
 public class ScoreCard {
-    public final Scanner scan = new Scanner(System.in);
-    public final String[] COMBOS = {"ONES", "TWOS", "THREES", "FOURS", "FIVES", "SIXES",
-            "THREE_OF_A_KIND", "FOUR_OF_A_KIND", "SMALL_STRAIGHT", "LARGE_STRAIGHT", "FULL_HOUSE", "CHANCE", "YAHTZEE"};
-    public final int[][] SMALL_STRAIGHTS = {{1, 2, 3, 4}, {2, 3, 4, 5}, {3, 4, 5, 6}};
-    public final int[][] LARGE_STRAIGHTS = {{1, 2, 3, 4, 5}, {2, 3, 4, 5, 6}};
+    private final Scanner scan = new Scanner(System.in);
 
-    public Map<String, Integer> scorecard = new HashMap<>();
-    public Map<String, Integer> possibleCombos = new HashMap<>();
-    public Map<Integer, Integer> currentFaceValues = new HashMap<>();
-    public int totalScore = 0;
+    protected final String[] COMBOS = {"ONES", "TWOS", "THREES", "FOURS", "FIVES", "SIXES",
+            "THREE_OF_A_KIND", "FOUR_OF_A_KIND", "SMALL_STRAIGHT", "LARGE_STRAIGHT", "FULL_HOUSE", "CHANCE", "YAHTZEE"};
+    protected final int[][] SMALL_STRAIGHTS = {{1, 2, 3, 4}, {2, 3, 4, 5}, {3, 4, 5, 6}};
+    protected final int[][] LARGE_STRAIGHTS = {{1, 2, 3, 4, 5}, {2, 3, 4, 5, 6}};
+
+    protected Map<String, Integer> scorecard = new HashMap<>();
+    protected Map<String, Integer> possibleCombos = new HashMap<>();
+    protected Map<Integer, Integer> currentFaceValues = new HashMap<>();
+    protected int totalScore = 0;
 
     public ScoreCard(){
         for(String combo : COMBOS){
@@ -20,7 +21,7 @@ public class ScoreCard {
         }
     }
 
-    public void showScorecard(){
+    protected void showScorecard(){
         System.out.println("\t- Your ScoreCard -");
 
         for(String combo : COMBOS){
@@ -44,7 +45,7 @@ public class ScoreCard {
         }
     }
 
-    public void checkCombos(int[] dice){
+    protected void checkCombos(int[] dice){
         possibleCombos.clear();
         currentFaceValues.clear();
 
@@ -173,7 +174,7 @@ public class ScoreCard {
         }
     }
 
-    public void showPossibleCombos(){
+    protected void showPossibleCombos(){
         System.out.println("\n- Possible Combos -");
 
         int count = 1;
@@ -188,7 +189,7 @@ public class ScoreCard {
         }
     }
 
-    public void getPlayerChoice(){
+    protected void getPlayerChoice(){
         int choice;
 
         do{
@@ -224,7 +225,7 @@ public class ScoreCard {
         }
     }
 
-    public int getPoints(String key){
+    private int getPoints(String key){
         int points = 0;
 
         switch(key){
@@ -273,7 +274,7 @@ public class ScoreCard {
         return points;
     }
 
-    public void calculateTotalScore(){
+    protected void calculateTotalScore(){
         for(String combo : COMBOS){
             totalScore += scorecard.get(combo);
 
