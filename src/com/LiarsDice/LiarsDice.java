@@ -59,7 +59,6 @@ public class LiarsDice extends Game {
     private static final int MIN_PLAYERS = 2;
     private static final int MAX_PLAYERS = 5;
 
-    private final List<Player> players = new ArrayList<>();
     private final Map<Integer, Integer> tableDice = new HashMap<>();
     private final int[] currentBid = new int[2]; // value, amount
 
