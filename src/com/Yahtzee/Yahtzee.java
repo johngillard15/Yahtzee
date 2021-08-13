@@ -150,7 +150,7 @@ public class Yahtzee {
             try{
                 // remove all whitespace from input,
                 // and if there is a problem parsing it as an integer, it can't be a valid selection
-                Integer.parseInt(rerolls.replaceAll("\\s", ""));
+                Integer.parseInt(rerolls.replaceAll("\\s+", ""));
                 break;
             }
             catch(NumberFormatException e){
