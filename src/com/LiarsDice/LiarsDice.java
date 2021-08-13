@@ -1,5 +1,6 @@
 package com.LiarsDice;
 
+import com.Game.Game;
 import com.Utilities.CLI;
 import com.company.DieGUI;
 import com.company.Player;
