@@ -26,7 +26,7 @@ public class ScoreCard {
 
         for(String combo : COMBOS){
             if(combo.equals("ONES"))
-                System.out.println("\t\tUpper Section");
+                System.out.println("Upper Section");
             else if(combo.equals("THREE_OF_A_KIND")) {
                 int upperScore = 0;
                 for(String upperCombo : COMBOS){
@@ -39,7 +39,7 @@ public class ScoreCard {
                 }
                 if(upperScore >= 63)
                     System.out.printf("\t\t*BONUS*: %s + 35\n", upperScore);
-                System.out.println("\t\tLower Section");
+                System.out.println("Lower Section");
             }
             System.out.printf("|%16s: %-4s|\n", combo, scorecard.get(combo) == -1 ? "---" : scorecard.get(combo));
         }
