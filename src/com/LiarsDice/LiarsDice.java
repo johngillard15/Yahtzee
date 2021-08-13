@@ -53,8 +53,7 @@ import java.util.*;
  * 5. if the player list has only 1 element, end the game and declare the winner
  */
 
-public class LiarsDice {
-    private static final Scanner scan = new Scanner(System.in);
+public class LiarsDice extends Game {
     private static final DieGUI dieGUI = new DieGUI();
     private static final int MIN_PLAYERS = 2;
     private static final int MAX_PLAYERS = 5;
