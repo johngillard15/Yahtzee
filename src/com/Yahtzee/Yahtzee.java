@@ -17,7 +17,7 @@ import java.util.Scanner;
  *
  * @since 28/7/2021
  * @author John Gillard
- * @version 5/8/2021
+ * @version 5/13/2021
  */
 
 /* Yahtzee game flow:
