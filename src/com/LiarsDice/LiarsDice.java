@@ -57,7 +57,6 @@ import java.util.*;
 public class LiarsDice extends Game {
     private static final DieGUI dieGUI = new DieGUI();
     private static final int MIN_PLAYERS = 2;
-    private static final int MAX_PLAYERS = 5;
 
     private final Map<Integer, Integer> tableDice = new HashMap<>();
     private final int[] currentBid = new int[2]; // value, amount
@@ -68,8 +67,6 @@ public class LiarsDice extends Game {
     private int currentPlayer = 0;
     private int currentTurn = 1;
     private boolean challenge = false;
-
-    // TODO: validate number format and valid amounts for startingDice (maybe also for numPlayers?)
 
     // TODO: now get the probability of each bid
     // TODO: maybe keep track of previous bids to help player make future bids
