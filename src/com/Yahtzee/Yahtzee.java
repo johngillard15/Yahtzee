@@ -1,6 +1,7 @@
 package com.Yahtzee;
 
 import com.Utilities.CLI;
+import com.Utilities.InputValidator;
 import com.company.DieGUI;
 import com.company.Player;
 
@@ -147,15 +148,12 @@ public class Yahtzee {
                 return;
             }
 
-            try{
-                // remove all whitespace from input,
-                // and if there is a problem parsing it as an integer, it can't be a valid selection
-                Integer.parseInt(rerolls.replaceAll("\\s+", ""));
+            // remove all whitespace from input,
+            // and if there is a problem parsing it as an integer, it can't be a valid selection
+            if(InputValidator.validateInt(rerolls.replaceAll("\\s+", "")))
                 break;
-            }
-            catch(NumberFormatException e){
-                System.out.println("That is not a valid selection. Please try again.\n");
-            }
+
+            System.out.println("That is not a valid selection. Please try again.\n");
         }while(true);
 
         activePlayer.cup.roll(activePlayer.cup.parseSelections(rerolls));
