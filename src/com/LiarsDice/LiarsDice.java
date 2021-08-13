@@ -70,11 +70,10 @@ public class LiarsDice {
     private int currentTurn = 1;
     private boolean challenge = false;
 
-    // TODO: ask Cliff about his thoughts on final lists/arrays and modulus loop control variable
     // TODO: validate number format and valid amounts for startingDice (maybe also for numPlayers?)
 
     // TODO: now get the probability of each bid
-    // TODO: maybe keep track of previous bids to help make future bids
+    // TODO: maybe keep track of previous bids to help player make future bids
 
     public LiarsDice(){
         System.out.println("\nHow many dice will each player start with?");
