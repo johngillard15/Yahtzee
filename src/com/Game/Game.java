@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public abstract class Game {
-    private static final Scanner scan = new Scanner(System.in);
+    protected static final Scanner scan = new Scanner(System.in);
     protected List<Player> players = new ArrayList<>();
 
     public Game(){
