@@ -152,8 +152,8 @@ public class LiarsDice extends Game {
         CLI.pause();
     }
 
-    private void turn(Player activePlayer){
         System.out.printf("\n- %s's turn -\n", activePlayer.name);
+    protected void turn(Player activePlayer){
         CLI.pause();
 
         System.out.print("- Your dice -\n");
@@ -311,7 +311,7 @@ public class LiarsDice extends Game {
         }
     }
 
-    private void displayResults(){
+    protected void displayResults(){
         for(Player winner : players){
             System.out.printf("\n\nCongratulations, %s! You are the greatest Liar's Dice player ever!11!!!11!!\n",
                     winner.name);
