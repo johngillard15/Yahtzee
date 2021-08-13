@@ -97,7 +97,7 @@ public class Yahtzee {
 
     public void play(){
         for(int round = 1; round <= 13; round++){
-            System.out.printf("\n-- Round %d --", round);
+            System.out.printf("\n-- Round %d --\n", round);
             if(round == 13)
                 System.out.println("FINAL ROUND");
             round();
@@ -108,7 +108,7 @@ public class Yahtzee {
 
     private void round(){
         for(Player activePlayer : players){
-            System.out.printf("\n- %s's turn -\n", activePlayer.name);
+            System.out.printf("- %s's turn -\n", activePlayer.name);
             CLI.pause();
             turn(activePlayer);
         }

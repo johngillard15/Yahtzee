@@ -43,9 +43,9 @@ public class Cup {
         for(int selection : selections)
             roll(selection);
     }
-//    public void roll(int selection){
-//        dice.get(selection).roll();
-//    }
+    public void roll(int selection){
+        dice.get(selection).roll();
+    }
 
     public void roll(List<Integer> selections){
         for(int selection : selections)
