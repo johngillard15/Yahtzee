@@ -152,8 +152,8 @@ public class LiarsDice extends Game {
         CLI.pause();
     }
 
-        System.out.printf("\n- %s's turn -\n", activePlayer.name);
     protected void turn(Player activePlayer){
+        System.out.printf("\n- [P%d] %s's turn -\n", currentPlayer + 1, activePlayer.name);
         CLI.pause();
 
         System.out.print("- Your dice -\n");
