@@ -167,58 +167,26 @@ public class Yahtzee {
 
     private void displayResults(){
         Player winner = players.get(0);
-        List<Player> tiedPlayers = new ArrayList<>();
         final String RADIO = "\uD83D\uDCFB";
 
         System.out.println("\nThat's the end of the game! Let's see who won...");
         for(Player player : players){
             player.scorecard.calculateTotalScore();
-            // ↓ for testing ties; only run displayResults method in play() ↓
-            // player.scorecard.totalScore = 69;
             System.out.printf("%s's Total Score: %d\n", player.name, player.scorecard.totalScore);
 
             /*
              * If the player has a higher score than the winner, they are the new winner
-             * clear tiedPlayers if it had players
-             * if they have the same score, they will be added to tiedPlayers until their score is surpassed
-             * if a third+ player also ties, don't re-add the initial winner to tiedPlayers and add the third+ player
              */
             if(players.indexOf(player) == 0)
                 winner = player;
             else if(player.scorecard.totalScore > winner.scorecard.totalScore){
                 winner = player;
-                tiedPlayers.clear();
-            }
-            else if(player.scorecard.totalScore == winner.scorecard.totalScore){
-                if(!tiedPlayers.contains(winner))
-                    tiedPlayers.add(winner);
-                tiedPlayers.add(player);
             }
         }
 
-        if(tiedPlayers.isEmpty())
-            System.out.printf("\n%s is the winner, with %d points scored!\n", winner.name, winner.scorecard.totalScore);
-        else
-            tiedGame(tiedPlayers);
+        System.out.printf("\n%s is the winner, with %d points scored!\n", winner.name, winner.scorecard.totalScore);
 
         System.out.println("\n\nThanks for playing, and congratulations!11!!!1\n\t");
-        if(tiedPlayers.isEmpty())
-            System.out.printf("\t%s♪♬ ᕕ(⌐■_■)ᕗ\n", RADIO);
-    }
-
-    private void tiedGame(List<Player> tiedPlayers){
-        String[] lennyFaces = {"(❋ᵔ‿ᵔ❋)", "(❋•‿•❋)", "¯\\_(ツ)_/¯", "( ͡° ͜ʖ ͡°)╭∩╮", "(╯ ͠° ͟ʖ ͡°)╯┻━┻", "(●⁀‿⁀●)",
-                "ヽ(•‿•)ノ", "( ͡⚆ ͜ʖ ͡⚆)╭∩╮", "(╬ಠ益ಠ)", "(･_･)", "ಠ╭╮ಠ", "◕‿↼", "ᕕ(⌐■_■)ᕗ", "¯\\_༼ ಥ ‿ ಥ ༽_/¯",
-                "༼ง=ಠ益ಠ=༽ง", "໒( 0◡0)っ✂╰⋃╯", "ヽ(　´　∇　｀　)ノ", "┌( ಠ‿ಠ)┘", "(ಠ_ಠ)", "(⌐▨_▨)", "(▰︶︹︺▰)"};
-
-        System.out.println("\nWe have a tie! Here are all our winners:");
-        for(Player player : tiedPlayers)
-            System.out.printf("- %s\n", player.name);
-
-        System.out.printf("\nThey all scored %d points!\n", tiedPlayers.get(0).scorecard.totalScore);
-
-        for(int i = 0; i < tiedPlayers.size(); i++)
-            System.out.printf("%s\t", lennyFaces[(int)(Math.random() * lennyFaces.length)]);
-        System.out.println();
+        System.out.printf("\t%s♪♬ ᕕ(⌐■_■)ᕗ\n", RADIO);
     }
 }
