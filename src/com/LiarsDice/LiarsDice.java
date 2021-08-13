@@ -72,25 +72,30 @@ public class LiarsDice extends Game {
     // TODO: maybe keep track of previous bids to help player make future bids
 
     public LiarsDice(){
-        System.out.println("\nHow many dice will each player start with?");
-        System.out.print("starting dice: ");
-        int startingDice = Integer.parseInt(scan.nextLine());
-
-        int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
-
-        int currentPlayer = 1;
-        do{
-            System.out.printf("\nPlayer %d, what is your name? ", currentPlayer);
-            String name = scan.nextLine().trim();
-            players.add(Player.addPlayer(name, startingDice));
-            System.out.printf("Hello, %s.\n", name);
-            currentPlayer++;
-        }while(players.size() < numPlayers);
+        int startingDice = 5;
 
         for(int faceValue = 1; faceValue <= 6; faceValue++)
             tableDice.put(faceValue, 0);
 
-        totalDiceInPlay = numPlayers * startingDice;
+        totalDiceInPlay = players.size() * startingDice;
+    }
+
+    @Override
+    protected void setup() {
+        System.out.println("\nHow many dice will each player start with?");
+        System.out.print("starting dice: ");
+        int startingDice = Integer.parseInt(scan.nextLine());
+
+        int numPlayers = getPlayerCount(MIN_PLAYERS);
+
+        do{
+            System.out.printf("\nPlayer %d, what is your name? ", players.size() + 1);
+            String name = scan.nextLine().trim();
+
+            players.add(Player.addPlayer(name, startingDice));
+
+            System.out.printf("Hello, %s.\n", name);
+        }while(players.size() < numPlayers);
     }
 
     public void play(){
@@ -106,7 +111,7 @@ public class LiarsDice extends Game {
         }
     }
 
-    private void round(){ // TODO: try to use modulus to iterate through players
+    protected void round(){
         CLI.cls();
         System.out.printf("\n-- ROUND %d --", currentRound);
 
