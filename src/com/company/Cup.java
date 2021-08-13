@@ -39,12 +39,13 @@ public class Cup {
             die.roll();
     }
 
+    public void roll(int selection){
+        dice.get(selection).roll();
+    }
+
     public void roll(int... selections){
         for(int selection : selections)
             roll(selection);
-    }
-    public void roll(int selection){
-        dice.get(selection).roll();
     }
 
     public void roll(List<Integer> selections){
@@ -53,7 +54,7 @@ public class Cup {
     }
 
     public List<Integer> parseSelections(String input){
-        String[] inputArr = input.split(" ");
+        String[] inputArr = input.split("\\s+");
 
         List<Integer> selections = new ArrayList<>();
         for(String number : inputArr)
@@ -62,7 +63,7 @@ public class Cup {
         return selections;
     }
 //    public int[] parseSelections(String input){
-//        String[] inputArr = input.split(" ");
+//        String[] inputArr = input.split("\\s+");
 //
 //        int[] selections = new int[inputArr.length];
 //        for(int i = 0; i < selections.length; i++)
