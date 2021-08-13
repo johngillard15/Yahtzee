@@ -1,5 +1,7 @@
 package com.company;
 
+import com.Yahtzee.ScoreCard;
+
 import java.util.Scanner;
 
 public class Player {
