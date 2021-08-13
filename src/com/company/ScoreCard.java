@@ -21,14 +21,26 @@ public class ScoreCard {
     }
 
     public void showScorecard(){
-        System.out.println("- Your ScoreCard -");
+        System.out.println("\t- Your ScoreCard -");
 
         for(String combo : COMBOS){
             if(combo.equals("ONES"))
-                System.out.println("Upper Section");
-            else if(combo.equals("THREE_OF_A_KIND"))
-                System.out.println("Lower Section");
-            System.out.printf("%s: %s\n", combo, scorecard.get(combo) == -1 ? "---" : scorecard.get(combo));
+                System.out.println("\t\tUpper Section");
+            else if(combo.equals("THREE_OF_A_KIND")) {
+                int upperScore = 0;
+                for(String upperCombo : COMBOS){
+                    if(scorecard.get(upperCombo) == -1)
+                        upperScore += 0;
+                    else
+                        upperScore += scorecard.get(upperCombo);
+
+                    if(upperCombo.equals("SIXES")) break;
+                }
+                if(upperScore >= 63)
+                    System.out.printf("\t\t*BONUS*: %s + 35\n", upperScore);
+                System.out.println("\t\tLower Section");
+            }
+            System.out.printf("|%16s: %-4s|\n", combo, scorecard.get(combo) == -1 ? "---" : scorecard.get(combo));
         }
     }
 
