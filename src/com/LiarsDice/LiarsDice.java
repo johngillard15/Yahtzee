@@ -130,13 +130,8 @@ public class LiarsDice {
                         : currentPlayer - 1;
                 accuse(players.get(currentPlayer), players.get(lastPlayer));
             }
-            else{
-                if(currentPlayer == players.size() - 1)
-                    currentPlayer = 0;
-                else
-                    currentPlayer++;
-            }
-
+            else
+                currentPlayer = ++currentPlayer % players.size();
         }while(!challenge);
 
         endRound();
