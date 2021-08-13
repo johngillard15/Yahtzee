@@ -135,7 +135,7 @@ public class Yahtzee {
 
     }
 
-    public void getSelections(Player activePlayer){
+    private void getSelections(Player activePlayer){
         String rerolls;
 
         do{
