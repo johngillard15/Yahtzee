@@ -112,6 +112,10 @@ public class Yahtzee extends Game {
             showPlayerDice(activePlayer);
         }
 
+        /*for testing joker rules
+        int[] dice = {6, 6, 6, 6, 6};
+        activePlayer.scorecard.checkCombos(dice);*/
+
         activePlayer.scorecard.checkCombos(activePlayer.cup.parseCup());
         activePlayer.scorecard.showPossibleCombos();
         activePlayer.scorecard.getPlayerChoice();
