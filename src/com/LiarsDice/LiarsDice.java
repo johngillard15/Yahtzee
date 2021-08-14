@@ -90,7 +90,7 @@ public class LiarsDice extends Game {
                 validDiceAmount = true;
             }
             else
-                System.out.printf("You cannot play the game with %s.", input);
+                System.out.printf("You cannot play the game with \"%s\" dice.\n", input);
         }while(!validDiceAmount);
 
         int numPlayers = getPlayerCount(MIN_PLAYERS);
