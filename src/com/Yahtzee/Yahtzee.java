@@ -138,7 +138,7 @@ public class Yahtzee {
 
     private void getSelections(Player activePlayer){
         String rerolls;
-
+        boolean validSelection = false;
         do{
             System.out.print("Select the dice you want to re-roll (1-5) ");
             rerolls = scan.nextLine().trim();
@@ -151,10 +151,10 @@ public class Yahtzee {
             // remove all whitespace from input,
             // and if there is a problem parsing it as an integer, it can't be a valid selection
             if(InputValidator.validateInt(rerolls.replaceAll("\\s+", "")))
-                break;
+                validSelection = true;
 
             System.out.println("That is not a valid selection. Please try again.\n");
-        }while(true);
+        }while(!validSelection);
 
         activePlayer.cup.roll(activePlayer.cup.parseSelections(rerolls));
     }
