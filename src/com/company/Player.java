@@ -2,12 +2,9 @@ package com.company;
 
 import com.Yahtzee.ScoreCard;
 
-import java.util.Scanner;
-
 public class Player {
     public String name;
     public Cup cup;
-    public int score = 0;
     public ScoreCard scorecard = new ScoreCard();
 
     public Player(String name){
