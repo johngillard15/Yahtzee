@@ -63,34 +63,16 @@ public class ScoreCard {
 
         for(String combo : COMBOS){
             if(scorecard.get(combo) == -1){
+                int upperNum = Arrays.asList(COMBOS).indexOf(combo) + 1;
+
                 switch(combo){
                     case "ONES":
-                        if(currentFaceValues.containsKey(1))
-                            possibleCombos.put(combo, getPoints(combo));
-                        break;
-
                     case "TWOS":
-                        if(currentFaceValues.containsKey(2))
-                            possibleCombos.put(combo, getPoints(combo));
-                        break;
-
                     case "THREES":
-                        if(currentFaceValues.containsKey(3))
-                            possibleCombos.put(combo, getPoints(combo));
-                        break;
-
                     case "FOURS":
-                        if(currentFaceValues.containsKey(4))
-                            possibleCombos.put(combo, getPoints(combo));
-                        break;
-
                     case "FIVES":
-                        if(currentFaceValues.containsKey(5))
-                            possibleCombos.put(combo, getPoints(combo));
-                        break;
-
                     case "SIXES":
-                        if(currentFaceValues.containsKey(6))
+                        if(currentFaceValues.containsKey(upperNum))
                             possibleCombos.put(combo, getPoints(combo));
                         break;
 
@@ -230,25 +212,16 @@ public class ScoreCard {
 
     private int getPoints(String key){
         int points = 0;
+        int upperNum = Arrays.asList(COMBOS).indexOf(key) + 1;
 
         switch(key){
             case "ONES":
-                points = currentFaceValues.get(1);
-                break;
             case "TWOS":
-                points = currentFaceValues.get(2) * 2;
-                break;
             case "THREES":
-                points = currentFaceValues.get(3) * 3;
-                break;
             case "FOURS":
-                points = currentFaceValues.get(4) * 4;
-                break;
             case "FIVES":
-                points = currentFaceValues.get(5) * 5;
-                break;
             case "SIXES":
-                points = currentFaceValues.get(6) * 6;
+                points = currentFaceValues.get(upperNum) * upperNum;
                 break;
             case "THREE_OF_A_KIND":
             case "FOUR_OF_A_KIND":
