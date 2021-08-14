@@ -29,16 +29,20 @@ public class ScoreCard {
                 System.out.println("Upper Section");
             else if(combo.equals("THREE_OF_A_KIND")) {
                 int upperScore = 0;
+                boolean usedAllUppers = true;
                 for(String upperCombo : COMBOS){
-                    if(scorecard.get(upperCombo) == -1)
-                        upperScore += 0;
+                    if(usedAllUppers && scorecard.get(upperCombo) == -1)
+                        usedAllUppers = false;
                     else
                         upperScore += scorecard.get(upperCombo);
 
                     if(upperCombo.equals("SIXES")) break;
                 }
-                if(upperScore >= 63)
-                    System.out.printf("\t\t*BONUS*: %s + 35\n", upperScore);
+
+                System.out.printf("%17s: %d\n", "Upper Score", upperScore);
+                if(usedAllUppers){
+                    System.out.printf("%17s: %d\n", "*BONUS*", upperScore >= 63 ? 35 : 0);
+                }
                 System.out.println("Lower Section");
             }
             System.out.printf("|%16s: %-4s|\n", combo, scorecard.get(combo) == -1 ? "---" : scorecard.get(combo));
