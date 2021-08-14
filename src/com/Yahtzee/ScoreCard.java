@@ -40,9 +40,7 @@ public class ScoreCard {
                 }
 
                 System.out.printf("%17s: %d\n", "Upper Score", upperScore);
-                if(usedAllUppers){
-                    System.out.printf("%17s: %d\n", "*BONUS*", upperScore >= 63 ? 35 : 0);
-                }
+                if(usedAllUppers) System.out.printf("%17s: %d\n", "*BONUS*", upperScore >= 63 ? 35 : 0);
                 System.out.println("Lower Section");
             }
             System.out.printf("|%16s: %-4s|\n", combo, scorecard.get(combo) == -1 ? "---" : scorecard.get(combo));
@@ -187,10 +185,8 @@ public class ScoreCard {
         int count = 1;
         for(String combo : COMBOS){
             if(possibleCombos.containsKey(combo)){
-                if(possibleCombos.get(combo) == 1)
-                    System.out.printf("%d. %s (%d point)\n", count, combo, possibleCombos.get(combo));
-                else
-                    System.out.printf("%d. %s (%d points)\n", count, combo, possibleCombos.get(combo));
+                int points = possibleCombos.get(combo);
+                System.out.printf("%d. %s (%d point%s)\n", count, combo, points, points == 1 ? "" : "s");
                 count++;
             }
         }
