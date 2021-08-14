@@ -157,19 +157,18 @@ public class Yahtzee extends Game {
             player.scorecard.calculateTotalScore();
             System.out.printf("%s's Total Score: %d\n", player.name, player.scorecard.totalScore);
 
-            /*
-             * If the player has a higher score than the winner, they are the new winner
-             */
+            // If the player has a higher score than the winner, they are the new winner
             if(players.indexOf(player) == 0)
                 winner = player;
-            else if(player.scorecard.totalScore > winner.scorecard.totalScore){
+            else if(player.scorecard.totalScore > winner.scorecard.totalScore)
                 winner = player;
-            }
         }
 
         System.out.printf("\n%s is the winner, with %d points scored!\n", winner.name, winner.scorecard.totalScore);
 
-        System.out.println("\n\nThanks for playing, and congratulations!11!!!1\n\t");
+
+        System.out.println("\n\nThanks for playing, and congratulations!11!!!1\n");
+
         System.out.printf("\t%s♪♬ ᕕ(⌐■_■)ᕗ\n", RADIO);
     }
 }
