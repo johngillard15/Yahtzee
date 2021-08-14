@@ -9,8 +9,7 @@ public class Cup {
     private final int DEFAULT_MAX_DICE = 5;
 
     public Cup(){
-        while(dice.size() < DEFAULT_MAX_DICE)
-            addDie();
+        new Cup(DEFAULT_MAX_DICE);
     }
 
     public Cup(int diceAmount){
