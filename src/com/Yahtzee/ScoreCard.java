@@ -210,10 +210,14 @@ public class ScoreCard {
             if(possibleCombos.containsKey(combo))
                 count++;
             if(count == choice){
-                scorecard.put(combo, possibleCombos.get(combo));
+                addPoints(combo);
                 break;
             }
         }
+    }
+
+    private void addPoints(String combo){
+        scorecard.put(combo, possibleCombos.get(combo));
     }
 
     private int getPoints(String key){
