@@ -178,7 +178,8 @@ public class ScoreCard {
         int choice;
 
         do{
-            System.out.printf("Which score would you like to use? (1-%d)\n", possibleCombos.size());
+            System.out.printf("Which score would you like to use? (1%s)\n", possibleCombos.size() == 1 ? "" :
+                    "-" + possibleCombos.size() + "");
             String input = scan.nextLine().trim();
 
             try{
