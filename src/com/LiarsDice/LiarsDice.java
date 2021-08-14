@@ -118,11 +118,8 @@ public class LiarsDice extends Game {
     }
 
     private void zeroTable(){
-        if(currentRound == 1){
-            for(int faceValue = 1; faceValue <= 6; faceValue++)
-                tableDice.put(faceValue, 0);
-        }
-        tableDice.replaceAll((key, value) -> 0);
+        for(int faceValue = 1; faceValue <= 6; faceValue++)
+            tableDice.put(faceValue, 0);
     }
 
     private void rollAll(){
@@ -166,6 +163,7 @@ public class LiarsDice extends Game {
         challenge = false;
 
         zeroTable();
+        //tableDice.replaceAll((key, value) -> 0);
 
         clearBids();
 
