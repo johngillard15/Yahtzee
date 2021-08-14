@@ -2,6 +2,7 @@ package com.LiarsDice;
 
 import com.Game.Game;
 import com.Utilities.CLI;
+import com.Utilities.InputValidator;
 import com.company.DieGUI;
 import com.company.Player;
 
@@ -77,9 +78,20 @@ public class LiarsDice extends Game {
 
     @Override
     protected void setup() {
-        System.out.println("\nHow many dice will each player start with?");
-        System.out.print("starting dice: ");
-        int startingDice = Integer.parseInt(scan.nextLine());
+        int startingDice = 0;
+        boolean validDiceAmount = false;
+        do{
+            System.out.println("\nHow many dice will each player start with?");
+            System.out.print("starting dice: ");
+            String input = scan.nextLine();
+
+            if(InputValidator.validateInt(input)) {
+                startingDice = Integer.parseInt(input);
+                validDiceAmount = true;
+            }
+            else
+                System.out.printf("You cannot play the game with %s.", input);
+        }while(!validDiceAmount);
 
         int numPlayers = getPlayerCount(MIN_PLAYERS);
 
