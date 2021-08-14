@@ -1,5 +1,6 @@
 package com.Yahtzee;
 
+import com.Game.Game;
 import com.Utilities.CLI;
 import com.Utilities.InputValidator;
 import com.company.DieGUI;
@@ -74,24 +75,15 @@ import java.util.Scanner;
  *
  */
 
-public class Yahtzee {
     private static final Scanner scan = new Scanner(System.in);
+public class Yahtzee extends Game {
     private static final DieGUI dieGUI = new DieGUI();
     private static final int MIN_PLAYERS = 1;
     private static final int MAX_PLAYERS = 5;
     private final List<Player> players = new ArrayList<>();
 
     public Yahtzee(){
-        int numPlayers = Player.getPlayerCount(MIN_PLAYERS, MAX_PLAYERS);
 
-        int currentPlayer = 1;
-        while(players.size() < numPlayers){
-            System.out.printf("Player %d, what is your name? ", currentPlayer);
-            String name = scan.nextLine().trim();
-            players.add(Player.addPlayer(name));
-            System.out.printf("Hello, %s.\n", name);
-            currentPlayer++;
-        }
     }
 
     public void play(){
