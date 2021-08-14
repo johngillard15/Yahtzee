@@ -1,5 +1,6 @@
 package com.company;
 
+import com.Game.Game;
 import com.HighLow.HighLow;
 import com.LiarsDice.LiarsDice;
 import com.Yahtzee.Yahtzee;
@@ -37,11 +38,11 @@ public class Main {
                 HighLow.play();
                 break;
             case 2:
-                LiarsDice liarsDice = new LiarsDice();
+                Game liarsDice = new LiarsDice();
                 liarsDice.play();
                 break;
             case 3:
-                Yahtzee yahtzee = new Yahtzee();
+                Game yahtzee = new Yahtzee();
                 yahtzee.play();
                 break;
         }
