@@ -167,7 +167,12 @@ public class ScoreCard {
         int count = 1;
         for(String combo : COMBOS){
             if(possibleCombos.containsKey(combo)){
-                int points = possibleCombos.get(combo);
+                int points;
+                if(combo.equals("YAHTZEE"))
+                    points = getPoints(combo);
+                else
+                    points = possibleCombos.get(combo);
+
                 System.out.printf("%d. %s (%d point%s)\n", count, combo, points, points == 1 ? "" : "s");
                 count++;
             }
