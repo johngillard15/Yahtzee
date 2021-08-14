@@ -143,8 +143,10 @@ public class ScoreCard {
                         if(currentFaceValues.size() == 1){
                             if(scorecard.get(combo) == -1)
                                 possibleCombos.put(combo, getPoints(combo));
-                            else
+                            else{
                                 possibleCombos.put(combo, scorecard.get(combo) + getPoints(combo));
+                                joker();
+                            }
                         }
                         break;
                 }
@@ -218,6 +220,65 @@ public class ScoreCard {
 
     private void addPoints(String combo){
         scorecard.put(combo, possibleCombos.get(combo));
+    }
+
+    private void joker(){
+        addPoints("YAHTZEE");
+        possibleCombos.clear();
+
+        System.out.println("\nLooks like you got another Yahtzee! +100 Points!\n");
+
+        String yahtzee = null;
+        // if the corresponding upper score was not yet used, put in possible combos and end method
+        for(String combo : COMBOS){
+            int upperNum = Arrays.asList(COMBOS).indexOf(combo) + 1;
+
+            if(currentFaceValues.containsKey(upperNum) && scorecard.get(combo) == -1){
+                possibleCombos.put(combo, getPoints(combo));
+                System.out.printf("Since %s is unused, you will also get %d points for that combo!\n", combo,
+                        possibleCombos.get(combo));
+                return;
+            }
+            else if(currentFaceValues.containsKey(upperNum)){
+                System.out.printf("Since %s is used, you have to choose a different score to fill in.\n", combo);
+                yahtzee = combo;
+                break;
+            }
+
+            if(combo.equals("SIXES")) break;
+        }
+
+        // if the Yahtzee roll was already used in upper section, grab unused upper combos
+        for(String combo : COMBOS){
+            if(!combo.equals(yahtzee)){
+                int points = scorecard.get(combo);
+                if (points == -1)
+                    possibleCombos.put(combo, 0);
+            }
+
+            if(combo.equals("SIXES")) break;
+        }
+
+        // if all uppers were used, grab unused lower combos
+        if(possibleCombos.isEmpty()){
+            int lowerStart = Arrays.asList(COMBOS).indexOf("THREE_OF_A_KIND"); // index = 6
+            List<String> COMBOS_LOW = Arrays.asList(COMBOS).subList(lowerStart, COMBOS.length - 1);
+
+            for(String combo : COMBOS_LOW){
+                int points = scorecard.get(combo);
+                if(points == -1)
+                    possibleCombos.put(combo, getPoints(combo));
+            }
+        }
+
+        // if everything is used, it must be the last round
+        // otherwise, ask player which score to use
+        if(possibleCombos.isEmpty()){
+            System.out.println("Seems like you have a lot points already.\n" +
+                    "Let's see how this game ends!");
+        }
+        else
+            System.out.println("Choose a combo to fill in:");
     }
 
     private int getPoints(String key){
