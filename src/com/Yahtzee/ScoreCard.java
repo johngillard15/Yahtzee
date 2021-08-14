@@ -47,6 +47,9 @@ public class ScoreCard {
             }
             System.out.printf("|%16s: %-4s|\n", combo, scorecard.get(combo) == -1 ? "---" : scorecard.get(combo));
         }
+
+        calculateTotalScore();
+        System.out.printf("%17s: %d\n", "Total Score", totalScore);
     }
 
     protected void checkCombos(int[] dice){
@@ -279,8 +282,12 @@ public class ScoreCard {
     }
 
     protected void calculateTotalScore(){
+        totalScore = 0;
+
         for(String combo : COMBOS){
-            totalScore += scorecard.get(combo);
+            int score = scorecard.get(combo);
+            if(score != -1)
+                totalScore += score;
 
             if(combo.equals("SIXES") && totalScore >= 63)
                 totalScore += 35;
