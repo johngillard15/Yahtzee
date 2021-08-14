@@ -7,6 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * <p>Provides a template for a text based console game.</p>
+ *
+ * @since 13/8/2021
+ * @author John
+ * @version 14/8/2021
+ */
+
 public abstract class Game {
     protected static final Scanner scan = new Scanner(System.in);
     protected List<Player> players = new ArrayList<>();
@@ -31,11 +39,9 @@ public abstract class Game {
     protected static int getPlayerCount(){
         return getPlayerCount(1, -1);
     }
-
     protected static int getPlayerCount(final int MIN){
         return getPlayerCount(MIN, -1);
     }
-
     protected static int getPlayerCount(final int MIN, final int MAX){
         int numPlayers;
         boolean validNumber;
