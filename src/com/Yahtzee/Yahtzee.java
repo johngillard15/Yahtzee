@@ -91,7 +91,7 @@ public class Yahtzee extends Game {
         displayResults();
     }
 
-    private void round(){
+    protected void round(){
         for(Player activePlayer : players){
             System.out.printf("\n- %s's turn -\n", activePlayer.name);
             CLI.pause();
@@ -99,7 +99,7 @@ public class Yahtzee extends Game {
         }
     }
 
-    private void turn(Player activePlayer){
+    protected void turn(Player activePlayer){
         activePlayer.scorecard.showScorecard();
 
         activePlayer.cup.roll();
@@ -146,7 +146,7 @@ public class Yahtzee extends Game {
         dieGUI.showDice(player.cup.parseCup());
     }
 
-    private void displayResults(){
+    protected void displayResults(){
         Player winner = players.get(0);
         final String RADIO = "\uD83D\uDCFB";
 
