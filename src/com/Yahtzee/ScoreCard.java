@@ -62,7 +62,7 @@ public class ScoreCard {
         }
 
         for(String combo : COMBOS){
-            if(scorecard.get(combo) == -1){
+            if(scorecard.get(combo) == -1 || combo.equals("YAHTZEE")){
                 int upperNum = Arrays.asList(COMBOS).indexOf(combo) + 1;
 
                 switch(combo){
