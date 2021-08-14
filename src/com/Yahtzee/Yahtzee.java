@@ -6,10 +6,6 @@ import com.Utilities.InputValidator;
 import com.company.DieGUI;
 import com.company.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 /**
  * <h1>Yahtzee</h1>
  *
@@ -75,12 +71,10 @@ import java.util.Scanner;
  *
  */
 
-    private static final Scanner scan = new Scanner(System.in);
 public class Yahtzee extends Game {
     private static final DieGUI dieGUI = new DieGUI();
     private static final int MIN_PLAYERS = 1;
     private static final int MAX_PLAYERS = 5;
-    private final List<Player> players = new ArrayList<>();
 
     public Yahtzee(){
 
