@@ -74,8 +74,6 @@ import java.util.Scanner;
  *
  */
 
-// TODO: now try to sort dice list to help player see combos
-
 public class Yahtzee {
     private static final Scanner scan = new Scanner(System.in);
     private static final DieGUI dieGUI = new DieGUI();
@@ -133,7 +131,6 @@ public class Yahtzee {
         activePlayer.scorecard.checkCombos(activePlayer.cup.parseCup());
         activePlayer.scorecard.showPossibleCombos();
         activePlayer.scorecard.getPlayerChoice();
-
     }
 
     private void getSelections(Player activePlayer){
@@ -152,8 +149,8 @@ public class Yahtzee {
             // and if there is a problem parsing it as an integer, it can't be a valid selection
             if(InputValidator.validateInt(rerolls.replaceAll("\\s+", "")))
                 validSelection = true;
-
-            System.out.println("That is not a valid selection. Please try again.\n");
+            else
+                System.out.println("That is not a valid selection. Please try again.\n");
         }while(!validSelection);
 
         activePlayer.cup.roll(activePlayer.cup.parseSelections(rerolls));
