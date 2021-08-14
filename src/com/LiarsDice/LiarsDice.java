@@ -64,20 +64,15 @@ public class LiarsDice extends Game {
     private int[] lastBid = new int[2];
     private int totalDiceInPlay;
     private int currentRound = 1;
-    private int currentPlayer = 0;
     private int currentTurn = 1;
+    private int currentPlayer = 0;
     private boolean challenge = false;
 
     // TODO: now get the probability of each bid
     // TODO: maybe keep track of previous bids to help player make future bids
 
     public LiarsDice(){
-        int startingDice = 5;
-
-        for(int faceValue = 1; faceValue <= 6; faceValue++)
-            tableDice.put(faceValue, 0);
-
-        totalDiceInPlay = players.size() * startingDice;
+        zeroTable(); // why does this throw null pointer when it's in setup?/???
     }
 
     @Override
@@ -96,6 +91,11 @@ public class LiarsDice extends Game {
 
             System.out.printf("Hello, %s.\n", name);
         }while(players.size() < numPlayers);
+
+        totalDiceInPlay = players.size() * startingDice;
+
+        System.out.println("\n--- Welcome to Liar's Dice! ---");
+        CLI.pause();
     }
 
     public void play(){
@@ -105,10 +105,23 @@ public class LiarsDice extends Game {
         displayResults();
     }
 
+    private void zeroTable(){
+        if(currentRound == 1){
+            for(int faceValue = 1; faceValue <= 6; faceValue++)
+                tableDice.put(faceValue, 0);
+        }
+        tableDice.replaceAll((key, value) -> 0);
+    }
+
     private void rollAll(){
         for(Player player : players){
             player.cup.roll();
         }
+    }
+
+    private void clearBids(){
+        Arrays.fill(currentBid, 0);
+        Arrays.fill(lastBid, 0);
     }
 
     protected void round(){
@@ -140,13 +153,12 @@ public class LiarsDice extends Game {
     private void endRound(){
         challenge = false;
 
-        tableDice.replaceAll((key, value) -> 0);
+        zeroTable();
 
-        Arrays.fill(currentBid, 0);
-        Arrays.fill(lastBid, 0);
+        clearBids();
 
-        currentTurn = 1;
         currentRound++;
+        currentTurn = 1;
 
         System.out.print("\n- End of round -\n");
         CLI.pause();
