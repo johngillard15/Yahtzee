@@ -31,7 +31,7 @@ public class ScoreCard {
                 int upperScore = 0;
                 boolean usedAllUppers = true;
                 for(String upperCombo : COMBOS){
-                    if(usedAllUppers && scorecard.get(upperCombo) == -1)
+                    if(scorecard.get(upperCombo) == -1)
                         usedAllUppers = false;
                     else
                         upperScore += scorecard.get(upperCombo);
