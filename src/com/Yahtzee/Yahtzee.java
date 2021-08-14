@@ -73,8 +73,6 @@ import com.company.Player;
 
 public class Yahtzee extends Game {
     private static final DieGUI dieGUI = new DieGUI();
-    private static final int MIN_PLAYERS = 1;
-    private static final int MAX_PLAYERS = 5;
 
     public Yahtzee(){
 
