@@ -73,7 +73,7 @@ public class LiarsDice extends Game {
     // TODO: maybe keep track of previous bids to help player make future bids
 
     public LiarsDice(){
-        zeroTable(); // why does this throw null pointer when it's in setup?/???
+        zeroTable(); // throws null pointer when in override setup() and when Game calls setup()
     }
 
     @Override
