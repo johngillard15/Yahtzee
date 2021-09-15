@@ -9,7 +9,7 @@ public class Player {
 
     public Player(String name){
         this.name = name;
-        cup = new Cup();
+        cup = new Cup(5);
     }
 
     public Player(String name, int startingDice){

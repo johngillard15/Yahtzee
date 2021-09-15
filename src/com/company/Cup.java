@@ -6,23 +6,26 @@ import java.util.List;
 
 public class Cup {
     public List<Die> dice = new ArrayList<>();
-    private final int DEFAULT_MAX_DICE = 5;
 
     public Cup(){
-        new Cup(DEFAULT_MAX_DICE);
+        fillCup(5);
     }
 
     public Cup(int diceAmount){
+        fillCup(diceAmount);
+    }
+
+    private void fillCup(int diceAmount){
         while(dice.size() < diceAmount)
             addDie();
     }
 
     public void addDie(){
-        dice.add(Die.createDie());
+        dice.add(new Die());
     }
 
     public void removeDie(){
-        dice.remove(0);
+        dice.remove(dice.size() - 1);
     }
 
     public void removeDie(int index){
